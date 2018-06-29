@@ -15,19 +15,19 @@ export class MockBackendService implements InMemoryDbService
                 id: 1,
                 name: "Mario",
                 surname: "Rossi",
-                birthdate: null,
+                birthdate: "1970-01-10",
             },
             {
                 id: 2,
                 name: "Ugo",
                 surname: "Verdi",
-                birthdate: null,
+                birthdate: "1975-10-15",
             },
             {
                 id: 3,
                 name: "Guido",
                 surname: "Bianchi",
-                birthdate: null,
+                birthdate: "1980-05-06",
             },
         ];
 

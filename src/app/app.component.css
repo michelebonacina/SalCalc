@@ -1,0 +1,8 @@
+.title {
+    text-align: center;
+    border: 2px solid black;
+}
+
+.person {
+    font-family: 'Courier New', Courier, monospace;
+}
