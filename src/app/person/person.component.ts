@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Person, PersonsService } from '../persons.service';
 
 @Component({
-  selector: 'app-person',
-  templateUrl: './person.component.html',
-  styleUrls: ['./person.component.css']
+    selector: 'app-person',
+    templateUrl: './person.component.html',
+    styleUrls: ['./person.component.css']
 })
-export class PersonComponent implements OnInit {
 
-  constructor() { }
+export class PersonComponent implements OnInit
+{
 
-  ngOnInit() {
-  }
+    @Input("person") person: Person;
+    @Input("personsService") personsService: PersonsService;
+
+    constructor() { }
+
+    ngOnInit()
+    {
+    }
 
 }
