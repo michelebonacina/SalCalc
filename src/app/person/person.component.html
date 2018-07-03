@@ -12,15 +12,15 @@
         <form [formGroup]="personForm" (ngSubmit)="createPerson($event, personForm)">
             <div class="w3-section">
                 <label>Surname</label>
-                <input class="w3-input w3-border" formControlName="surname" [ngClass]="{'hasError':!personForm.controls['surname'].valid}">
+                <input type="text" class="w3-input w3-border" formControlName="surname" [ngClass]="{'hasError':!personForm.controls['surname'].valid}">
             </div>
             <div class="w3-section">
                 <label>Name</label>
-                <input class="w3-input w3-border" formControlName="name" [ngClass]="{'hasError':!personForm.controls['name'].valid}">
+                <input type="text" class="w3-input w3-border" formControlName="name" [ngClass]="{'hasError':!personForm.controls['name'].valid}">
             </div>
             <div class="w3-section">
                 <label>Birthdate</label>
-                <input class="w3-input w3-border" formControlName="birthdate" [ngClass]="{'hasError':!personForm.controls['birthdate'].valid}">
+                <input type="date" class="w3-input w3-border" formControlName="birthdate" [ngClass]="{'hasError':!personForm.controls['birthdate'].valid}">
             </div>
             <button class="w3-button w3-padding-large w3-red w3-margin-bottom" [disabled]="!personForm.valid">Add</button>
             <button class="w3-button w3-padding-large w3-red w3-margin-bottom" (click)="resetPersonForm($event, personForm)">Reset</button>

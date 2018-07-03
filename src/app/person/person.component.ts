@@ -33,6 +33,8 @@ export class PersonComponent implements OnInit
     // prepares new person
     preparePerson()
     {
+        // resets form
+        this.personForm.reset();
         // gets document root
         let document = this.element.nativeElement.ownerDocument;
         // hides add button
@@ -44,9 +46,9 @@ export class PersonComponent implements OnInit
     }
 
     // adds new person
-    createPerson(event: any, personForm: NgForm)
+    createPerson(event: any)
     {
-        if (personForm.valid)
+        if (this.personForm.valid)
         {
             // the data are valid
             // gets document root
@@ -57,28 +59,28 @@ export class PersonComponent implements OnInit
             document.getElementById("newPersonData").className = "hide";
             // create new person
             let person: Person = new Person();
-            person.surname = personForm.controls["surname"].value;
-            person.name = personForm.controls["name"].value;
-            person.birthdate = personForm.controls["birthdate"].value;
+            person.surname = this.personForm.controls["surname"].value;
+            person.name = this.personForm.controls["name"].value;
+            person.birthdate = this.personForm.controls["birthdate"].value;
             // adds person to list            
             this.personsService.addPerson(person);
         }
     }
 
     // resets the form data
-    resetPersonForm(event: any, personForm: NgForm)
+    resetPersonForm(event: any)
     {
         // resets form
-        personForm.reset();
+        this.personForm.reset();
         // stops standard submit operation
         event.preventDefault();
     }
 
     // cancels new person operation without saving
-    cancelPersonForm(event: any, personForm: NgForm)
+    cancelPersonForm(event: any)
     {
         // resets form
-        personForm.reset();
+        this.personForm.reset();
         // shows add button
         document.getElementById("newPersonButton").className = "show";
         // hides person insert form
