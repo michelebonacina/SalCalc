@@ -1,3 +1,38 @@
-<p>
-    {{ person.surname }} {{ person.name }} ({{ person.birthdate | date: "dd-MM-yyyy" }})
-</p>
+<div id="personContainer" class="w3-container" id="contact" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red">
+        <b>Person</b>
+    </h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+
+    <div id="newPersonButton" class="show">
+        <button class="w3-button w3-padding-large w3-red w3-margin-bottom" (click)="preparePerson();">Add new Person</button>
+    </div>
+
+    <div id="newPersonData" class="hide">
+        <form [formGroup]="personForm" (ngSubmit)="createPerson($event, personForm)">
+            <div class="w3-section">
+                <label>Surname</label>
+                <input class="w3-input w3-border" formControlName="surname" [ngClass]="{'hasError':!personForm.controls['surname'].valid}">
+            </div>
+            <div class="w3-section">
+                <label>Name</label>
+                <input class="w3-input w3-border" formControlName="name" [ngClass]="{'hasError':!personForm.controls['name'].valid}">
+            </div>
+            <div class="w3-section">
+                <label>Birthdate</label>
+                <input class="w3-input w3-border" formControlName="birthdate" [ngClass]="{'hasError':!personForm.controls['birthdate'].valid}">
+            </div>
+            <button class="w3-button w3-padding-large w3-red w3-margin-bottom" [disabled]="!personForm.valid">Add</button>
+            <button class="w3-button w3-padding-large w3-red w3-margin-bottom" (click)="resetPersonForm($event, personForm)">Reset</button>
+            <button class="w3-button w3-padding-large w3-red w3-margin-bottom" (click)="cancelPersonForm($event, personForm)">Cancel</button>
+            <hr style="width:50px;border:5px solid red" class="w3-round">
+
+        </form>
+    </div>
+
+    <ul>
+        <li class="person" *ngFor="let person of persons">
+            <span>{{ person.surname }} {{ person.name }} ({{ person.birthdate | date: "dd-MM-yyyy" }})</span>
+        </li>
+    </ul>
+</div>

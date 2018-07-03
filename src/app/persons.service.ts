@@ -66,4 +66,22 @@ export class PersonsService
                 }
             );
     }
+
+    // gets persons list
+    // connect to backend and gets list of persons
+    addPerson(person: Person)
+    {
+        // calls backend and gets response
+        this.http
+            .post(this.url, JSON.stringify(person))
+            .toPromise()
+            .then(
+                (response) =>
+                {
+                    // gets persons
+                    this.getPersons();
+                }
+            );
+    }
+
 }

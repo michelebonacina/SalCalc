@@ -1,0 +1,15 @@
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.hasError {
+    background-color: red;
+}
+
+#newPersonData {
+    width: 600px;
+}
