@@ -50,6 +50,7 @@ export class PersonsService
 
     // gets persons list
     // connect to backend and gets list of persons
+    // after that, invokes observer for sending persons list to all subscribers
     getPersons()
     {
         // calls backend and gets response
@@ -67,11 +68,12 @@ export class PersonsService
             );
     }
 
-    // gets persons list
-    // connect to backend and gets list of persons
+    // adds a person
+    // connect to backend and adds a person to persons list
+    // after that, reload persons list
     addPerson(person: Person)
     {
-        // calls backend and gets response
+        // posts person to backend and gets response
         this.http
             .post(this.url, JSON.stringify(person))
             .toPromise()
@@ -84,4 +86,22 @@ export class PersonsService
             );
     }
 
+    // deletes a person
+    // connect to backend and deleted a person from persons list
+    // after thar, reload persons list
+    deletePerson(person: Person)
+    {
+        // deletes person from backend and gets response
+        this.http
+            .delete(`${this.url}/${person.id}`)
+            .toPromise()
+            .then(
+                (response) =>
+                {
+                    // gets persons
+                    this.getPersons();
+                }
+            );
+    }
+    
 }

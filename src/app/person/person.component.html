@@ -1,11 +1,11 @@
 <div id="personContainer" class="w3-container" id="contact" style="margin-top:75px">
-    <h1 class="w3-xxxlarge w3-text-red">
+    <h1 class="w3-xxxlarge w3-text-green">
         <b>Person</b>
     </h1>
-    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <hr class="separator w3-round">
 
     <div id="newPersonButton" class="show">
-        <button class="w3-button w3-padding-large w3-red w3-margin-bottom" (click)="preparePerson();">Add new Person</button>
+        <button class="w3-button w3-padding-large w3-light-green w3-margin-bottom" (click)="preparePerson();">Add new Person</button>
     </div>
 
     <div id="newPersonData" class="hide">
@@ -22,17 +22,31 @@
                 <label>Birthdate</label>
                 <input type="date" class="w3-input w3-border" formControlName="birthdate" [ngClass]="{'hasError':!personForm.controls['birthdate'].valid}">
             </div>
-            <button class="w3-button w3-padding-large w3-red w3-margin-bottom" [disabled]="!personForm.valid">Add</button>
-            <button class="w3-button w3-padding-large w3-red w3-margin-bottom" (click)="resetPersonForm($event, personForm)">Reset</button>
-            <button class="w3-button w3-padding-large w3-red w3-margin-bottom" (click)="cancelPersonForm($event, personForm)">Cancel</button>
-            <hr style="width:50px;border:5px solid red" class="w3-round">
+            <button class="w3-button w3-padding-large w3-light-green w3-margin-bottom" [disabled]="!personForm.valid">Add</button>
+            <button class="w3-button w3-padding-large w3-light-green w3-margin-bottom" (click)="resetPersonForm($event, personForm)">Reset</button>
+            <button class="w3-button w3-padding-large w3-light-green w3-margin-bottom" (click)="cancelPersonForm($event, personForm)">Cancel</button>
+            <hr class="separator w3-round">
 
         </form>
     </div>
 
-    <ul>
-        <li class="person" *ngFor="let person of persons">
-            <span>{{ person.surname }} {{ person.name }} ({{ person.birthdate | date: "dd-MM-yyyy" }})</span>
-        </li>
-    </ul>
+    <div class="w3-half">
+        <table class="w3-table w3-bordered w3-striped">
+            <tr>
+                <th class="w3-green w3-xlarge w3-center" colspan="4">Persons</th>
+            </tr>
+            <tr class="w3-green">
+                <th></th>
+                <th>Surname</th>
+                <th>Name</th>
+                <th>Birthdate</th>
+            </tr>
+            <tr *ngFor="let person of persons">
+                <td class="w3-cell-middle"><button class="w3-button w3-padding-xsmall w3-light-green" (click)="deletePerson($event, person);"><fa-icon [icon]="faTrash"></fa-icon></button></td>
+                <td class="w3-cell-middle">{{person.surname}}</td>
+                <td class="w3-cell-middle">{{person.name}}</td>
+                <td class="w3-cell-middle">{{person.birthdate | date: "dd-MM-yyyy"}}</td>
+            </tr>
+        </table>
+    </div>
 </div>

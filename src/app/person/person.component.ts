@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ElementRef, Renderer2 } from '@angular/core';
 import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { Person, PersonsService } from '../persons.service';
 
@@ -10,10 +11,10 @@ import { Person, PersonsService } from '../persons.service';
 })
 export class PersonComponent implements OnInit
 {
-
     @Input("persons") persons: Person[];
     @Input("personsService") personsService: PersonsService;
     personForm: FormGroup;
+    faTrash = faTrash;
 
     constructor(formBuilder: FormBuilder,
         private element: ElementRef
@@ -64,6 +65,14 @@ export class PersonComponent implements OnInit
             person.birthdate = this.personForm.controls["birthdate"].value;
             // adds person to list            
             this.personsService.addPerson(person);
+        }
+    }
+
+    deletePerson(event: any, person: Person)
+    {
+        if (confirm("Are you sure you want to delete " + person.surname + " " + person.name + "?"))
+        {
+            this.personsService.deletePerson(person);
         }
     }
 
