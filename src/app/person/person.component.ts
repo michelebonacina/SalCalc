@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ElementRef, Renderer2 } from '@angular/core';
 import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 
 import { Person, PersonsService } from '../persons.service';
 
@@ -15,6 +15,7 @@ export class PersonComponent implements OnInit
     @Input("personsService") personsService: PersonsService;
     personForm: FormGroup;
     faTrash = faTrash;
+    faAddressCard = faAddressCard;
 
     constructor(formBuilder: FormBuilder,
         private element: ElementRef
@@ -89,6 +90,13 @@ export class PersonComponent implements OnInit
     {
         // show person form
         this.showPersonForm();
+    }
+
+    // shows/hides persons details
+    showPersonDetails(event: any, person: Person)
+    {
+        // change details visibility status
+        person.showDetails = !person.showDetails;
     }
 
     //
