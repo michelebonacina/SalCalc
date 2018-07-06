@@ -1,6 +1,11 @@
 {
   "name": "sal-calc",
   "version": "0.0.0",
+  "description": "Salary Calculator",
+  "engines": {
+	"node": "8.11.3",
+	"npm": "5.6.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

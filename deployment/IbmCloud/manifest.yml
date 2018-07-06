@@ -1,0 +1,8 @@
+---
+applications:
+- name: salcalc
+  host: salcalc
+  memory: 256M
+  buildpack: staticfile_buildpack
+  env:
+    NODE_ENV: cloud-foundry
