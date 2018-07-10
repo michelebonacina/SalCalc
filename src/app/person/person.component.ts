@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ElementRef, Renderer2 } from '@angular/core';
-import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faTrash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 
 import { Person, PersonsService } from '../persons.service';
@@ -16,6 +16,7 @@ export class PersonComponent implements OnInit
     personForm: FormGroup;
     faTrash = faTrash;
     faAddressCard = faAddressCard;
+    showNewPersonForm: boolean = false;
 
     constructor(formBuilder: FormBuilder,
         private element: ElementRef
@@ -51,15 +52,8 @@ export class PersonComponent implements OnInit
     {
         // resets form
         this.personForm.reset();
-        // gets document root
-        let document = this.element.nativeElement.ownerDocument;
-        // hides add button
-        document.getElementById("newPersonButton").className = "hide";
-        // shows person insert form
-        let newPersonDataElement = document.getElementById("newPersonData");
-        newPersonDataElement.className = "show";
-        newPersonDataElement.getElementsByTagName("input")[0].focus();
-
+        // shows person form
+        this.showNewPersonForm = true;
     }
 
     // hides person form
@@ -68,12 +62,8 @@ export class PersonComponent implements OnInit
     {
         // resets form
         this.personForm.reset();
-        // gets document root
-        let document = this.element.nativeElement.ownerDocument;
-        // shows add button
-        document.getElementById("newPersonButton").className = "show";
-        // hides person insert form
-        document.getElementById("newPersonData").className = "hide";
+        // shows person form
+        this.showNewPersonForm = false;
     }
 
     // cancels new person operation without saving

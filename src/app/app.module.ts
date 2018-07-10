@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { PersonComponent } from './person/person.component';
 import { MockBackendService } from './mock-backend.service';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { PersonDetailsComponent } from './person-details/person-details.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         PersonComponent,
         NavMenuComponent,
+        PersonDetailsComponent,
     ],
     imports: [
         BrowserModule,

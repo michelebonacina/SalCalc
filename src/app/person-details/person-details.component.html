@@ -1,0 +1,35 @@
+<div *ngIf="modify">
+    <form [formGroup]="personForm" (ngSubmit)="modifyPerson($event, personForm)">
+        <div class="w3-section-small">
+            <label>Surname:</label>
+            <input type="text" class="w3-input-inline w3-border" formControlName="surname" [ngClass]="{'hasError':!personForm.controls['surname'].valid, 'isCorrect':personForm.controls['surname'].valid}"
+                autofocus>
+        </div>
+        <div class="w3-section-small">
+            <label>Name:</label>
+            <input type="text" class="w3-input-inline w3-border" formControlName="name" [ngClass]="{'hasError':!personForm.controls['name'].valid, 'isCorrect':personForm.controls['name'].valid}">
+        </div>
+        <div class="w3-section-small">
+            <label>Birthdate:</label>
+            <input type="date" class="w3-input-inline w3-border" formControlName="birthdate" [ngClass]="{'hasError':!personForm.controls['birthdate'].valid, 'isCorrect':personForm.controls['birthdate'].valid}">
+        </div>
+        <button class="w3-button w3-border w3-border-green" [disabled]="!personForm.valid || personForm.pristine">Save</button>
+        <button class="w3-button w3-border w3-border-green" (click)="cancelPersonForm($event, personForm)">Cancel</button>
+    </form>
+</div>
+
+<div *ngIf="!modify">
+    <div class="w3-section-small">
+        <label>Surname:</label>
+        <span class="w3-data-inline">{{person.surname}}</span>
+    </div>
+    <div class="w3-section-small">
+        <label>Name:</label>
+        <span class="w3-data-inline">{{person.name}}</span>
+    </div>
+    <div class="w3-section-small">
+        <label>Birthdate:</label>
+        <span class="w3-data-inline">{{person.birthdate | date: "dd-MM-yyyy"}}</span>
+    </div>
+    <button class="w3-button w3-border w3-border-green" (click)="modifyPersonForm($event)">Modify</button>
+</div>

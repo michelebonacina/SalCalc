@@ -4,29 +4,28 @@
     </h1>
     <hr class="separator w3-round">
 
-    <div id="newPersonButton" class="show">
-        <button class="w3-button w3-padding-large  w3-margin-bottom w3-border w3-border-green" (click)="preparePerson();">Add new Person</button>
+    <div *ngIf="!showNewPersonForm">
+        <button class="w3-button w3-margin-bottom w3-border w3-border-green" (click)="preparePerson();">Add new Person</button>
     </div>
 
-    <div id="newPersonData" class="hide">
+    <div *ngIf="showNewPersonForm">
         <form [formGroup]="personForm" (ngSubmit)="createPerson($event, personForm)">
-            <div class="w3-section">
+            <div class="w3-section-small">
                 <label>Surname</label>
-                <input type="text" class="w3-input w3-border" formControlName="surname" [ngClass]="{'hasError':!personForm.controls['surname'].valid}">
+                <input type="text" class="w3-input-inline w3-border" formControlName="surname" [ngClass]="{'hasError':!personForm.controls['surname'].valid, 'isCorrect':personForm.controls['surname'].valid}" autofocus>
             </div>
-            <div class="w3-section">
+            <div class="w3-section-small">
                 <label>Name</label>
-                <input type="text" class="w3-input w3-border" formControlName="name" [ngClass]="{'hasError':!personForm.controls['name'].valid}">
+                <input type="text" class="w3-input-inline w3-border" formControlName="name" [ngClass]="{'hasError':!personForm.controls['name'].valid, 'isCorrect':personForm.controls['name'].valid}">
             </div>
-            <div class="w3-section">
+            <div class="w3-section-small">
                 <label>Birthdate</label>
-                <input type="date" class="w3-input w3-border" formControlName="birthdate" [ngClass]="{'hasError':!personForm.controls['birthdate'].valid}">
+                <input type="date" class="w3-input-inline w3-border" formControlName="birthdate" [ngClass]="{'hasError':!personForm.controls['birthdate'].valid, 'isCorrect':personForm.controls['birthdate'].valid}">
             </div>
-            <button class="w3-button w3-padding-large w3-margin-bottom w3-border w3-border-green" [disabled]="!personForm.valid">Add</button>
-            <button class="w3-button w3-padding-large w3-margin-bottom w3-border w3-border-green" (click)="resetPersonForm($event, personForm)">Reset</button>
-            <button class="w3-button w3-padding-large w3-margin-bottom w3-border w3-border-green" (click)="cancelPersonForm($event, personForm)">Cancel</button>
+            <button class="w3-button w3-border w3-border-green" [disabled]="!personForm.valid">Add</button>
+            <button class="w3-button w3-border w3-border-green" (click)="resetPersonForm($event, personForm)">Reset</button>
+            <button class="w3-button w3-border w3-border-green" (click)="cancelPersonForm($event, personForm)">Cancel</button>
             <hr class="separator w3-round">
-
         </form>
     </div>
 
@@ -42,14 +41,20 @@
                 <th>Birthdate</th>
             </tr>
             <tr id="row_{{i}}" *ngFor="let person of persons; let i = index">
-                <td class="w3-cell-middle">
-                    <button class="w3-button w3-padding-xsmall" (click)="showPersonDetails($event, person);"><fa-icon [icon]="faAddressCard"></fa-icon></button>
-                    <button class="w3-button w3-padding-xsmall" (click)="deletePerson($event, person);"><fa-icon [icon]="faTrash"></fa-icon></button>
+                <td class="w3-cell-middle buttons-area">
+                    <button class="w3-button w3-padding-xsmall" (click)="showPersonDetails($event, person);">
+                        <fa-icon [icon]="faAddressCard"></fa-icon>
+                    </button>
+                    <button class="w3-button w3-padding-xsmall" (click)="deletePerson($event, person);">
+                        <fa-icon [icon]="faTrash"></fa-icon>
+                    </button>
                 </td>
                 <td *ngIf="!person.showDetails" class="w3-cell-middle">{{person.surname}}</td>
                 <td *ngIf="!person.showDetails" class="w3-cell-middle">{{person.name}}</td>
                 <td *ngIf="!person.showDetails" class="w3-cell-middle">{{person.birthdate | date: "dd-MM-yyyy"}}</td>
-                <td *ngIf="person.showDetails" class="w3-cell-middle" colspan="3">Ciao</td>
+                <td *ngIf="person.showDetails" class="w3-cell-middle" colspan="3">
+                    <app-person-details [person]="person" [personsService]="personsService"></app-person-details>
+                </td>
             </tr>
         </table>
     </div>
