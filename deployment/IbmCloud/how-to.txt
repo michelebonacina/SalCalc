@@ -1,0 +1,5 @@
+HowTo deploy application in IBM Cloud
+
+01. generate destribution
+    from main project dir
+        ng build
