@@ -20,7 +20,7 @@ export class AppComponent
     // creates a new app component
     constructor(public personsService: PersonsService)
     {
-        // resets persons list
+        // reset persons list
         this.persons = [];
     }
 

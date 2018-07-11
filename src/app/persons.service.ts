@@ -14,7 +14,7 @@ export class Person
 
 // defines services available for persons management
 // - getObservable: returns persons observable for change events subscribing
-// - getPersons: gets persons and raise update event
+// - getPersons: gets persons and raises update event
 @Injectable({
     providedIn: 'root'
 })
@@ -34,7 +34,7 @@ export class PersonsService
             {
                 // stores observable instance 
                 this.observer = observer;
-                // gets persons and raise update event
+                // gets persons and raises update event
                 this.getPersons();
             }
         );
@@ -50,7 +50,7 @@ export class PersonsService
     }
 
     // gets persons list
-    // connect to backend and gets list of persons
+    // connects to backend and gets persons list
     // after that, invokes observer for sending persons list to all subscribers
     getPersons()
     {
@@ -63,15 +63,15 @@ export class PersonsService
                 {
                     // gets persons from backend response
                     this.persons = response.json();
-                    // send update event to subscribers
+                    // sends update event to subscribers
                     this.observer.next(this.persons);
                 }
             );
     }
 
     // adds a person
-    // connect to backend and adds a person to persons list
-    // after that, reload persons list
+    // connects to backend and adds a person to persons list
+    // after that, reloads persons list
     addPerson(person: Person)
     {
         // posts person to backend and gets response
@@ -87,9 +87,27 @@ export class PersonsService
             );
     }
 
+    // modifies a person
+    // connects to backend and modifies person's data
+    // after that, reloads persons list
+    modifyPerson(person: Person)
+    {
+        // posts person to backend and gets response
+        this.http
+            .post(`${this.url}/${person.id}`, JSON.stringify(person))
+            .toPromise()
+            .then(
+                (response) =>
+                {
+                    // gets persons
+                    this.getPersons();
+                }
+            );
+    }
+
     // deletes a person
-    // connect to backend and deleted a person from persons list
-    // after thar, reload persons list
+    // connects to backend and deletes a person from persons list
+    // after thar, reloads persons list
     deletePerson(person: Person)
     {
         // deletes person from backend and gets response

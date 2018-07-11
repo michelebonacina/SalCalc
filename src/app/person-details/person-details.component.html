@@ -1,5 +1,9 @@
-<div *ngIf="modify">
+<div *ngIf="showModifyPersonForm">
     <form [formGroup]="personForm" (ngSubmit)="modifyPerson($event, personForm)">
+        <div class="w3-section-small">
+            <label>ID:</label>
+            <span class="w3-data-inline">{{personForm.controls['id'].value}}</span>
+        </div>
         <div class="w3-section-small">
             <label>Surname:</label>
             <input type="text" class="w3-input-inline w3-border" formControlName="surname" [ngClass]="{'hasError':!personForm.controls['surname'].valid, 'isCorrect':personForm.controls['surname'].valid}"
@@ -18,7 +22,11 @@
     </form>
 </div>
 
-<div *ngIf="!modify">
+<div *ngIf="!showModifyPersonForm">
+    <div class="w3-section-small">
+        <label>ID:</label>
+        <span class="w3-data-inline">{{person.id}}</span>
+    </div>
     <div class="w3-section-small">
         <label>Surname:</label>
         <span class="w3-data-inline">{{person.surname}}</span>
