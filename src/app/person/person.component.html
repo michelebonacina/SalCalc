@@ -11,15 +11,15 @@
     <div *ngIf="showNewPersonForm">
         <form [formGroup]="personForm" (ngSubmit)="createPerson($event, personForm)">
             <div class="w3-section-small">
-                <label>Surname</label>
+                <label>Surname</label><span class="w3-text-red" *ngIf="personForm.controls['surname'].validator && personForm.controls['surname'].validator('').required">*</span>
                 <input type="text" class="w3-input-inline w3-border" formControlName="surname" [ngClass]="{'hasError':!personForm.controls['surname'].valid, 'isCorrect':personForm.controls['surname'].valid}" autofocus>
             </div>
             <div class="w3-section-small">
-                <label>Name</label>
+                <label>Name</label><span class="w3-text-red" *ngIf="personForm.controls['name'].validator && personForm.controls['name'].validator('').required">*</span>
                 <input type="text" class="w3-input-inline w3-border" formControlName="name" [ngClass]="{'hasError':!personForm.controls['name'].valid, 'isCorrect':personForm.controls['name'].valid}">
             </div>
             <div class="w3-section-small">
-                <label>Birthdate</label>
+                <label>Birthdate</label><span class="w3-text-red" *ngIf="personForm.controls['birthdate'].validator && personForm.controls['birthdate'].validator('').required">*</span>
                 <input type="date" class="w3-input-inline w3-border" formControlName="birthdate" [ngClass]="{'hasError':!personForm.controls['birthdate'].valid, 'isCorrect':personForm.controls['birthdate'].valid}">
             </div>
             <button class="w3-button w3-border w3-border-green" [disabled]="!personForm.valid">Add</button>

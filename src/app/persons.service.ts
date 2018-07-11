@@ -2,15 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/observable';
 
-// defines a person
-export class Person
-{
-    id: number;                     // persons unique indentifier   
-    name: string;                   // person's name
-    surname: string;                // person's surname
-    birthdate: Date;                // person's date of birth
-    showDetails: Boolean = false;   // identify if person's details are shown
-}
+import { Person } from './model/person';
 
 // defines services available for persons management
 // - getObservable: returns persons observable for change events subscribing
@@ -122,5 +114,5 @@ export class PersonsService
                 }
             );
     }
-    
+
 }

@@ -2,7 +2,9 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faTrash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 
-import { Person, PersonsService } from '../persons.service';
+import { Person } from '../model/person';
+import { PersonsService } from '../persons.service';
+
 
 // defines component for person management
 // - resetPersonForm: removes person's data from form field
