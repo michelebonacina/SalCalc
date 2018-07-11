@@ -1,0 +1,13 @@
+hr.separator {
+    width: 50px;
+    border: 5px solid #4CAF50;
+}
+
+#newPersonData {
+    width: 600px;
+}
+
+.buttons-area {
+    width: 10px;
+    white-space: nowrap;
+}

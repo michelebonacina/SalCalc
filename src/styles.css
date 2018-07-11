@@ -1,1 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
+body,h1,h2,h3,h4,h5 {
+    font-family: "Poppins", sans-serif
+}
+
+body {
+    font-size:16px;
+}
+
+.hasError {
+    padding-left: 3px;
+    border-left: 5px solid red!important;
+}
+
+.isCorrect {
+    padding-left: 3px;
+    border-left: 5px solid green!important;
+}
+
+.w3-button {
+    margin-right: 10px;
+}
+
+.w3-input-inline {
+    margin-left: 10px;
+    border:none;
+    border-bottom:1px solid #ccc;
+}
+
+.w3-data-inline {
+    margin-left: 10px;
+}
+
+.w3-section-small {
+    margin-top:8px!important;
+    margin-bottom:8px!important}
+
+.w3-padding-xsmall {
+    padding: 2px 8px!important;
+}
+
+.w3-half img {
+    margin-bottom:-6px;
+    margin-top:16px;
+    opacity:0.8;
+    cursor:pointer
+}
+
+.w3-half img:hover{
+    opacity:1
+}
+
+

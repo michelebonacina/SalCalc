@@ -1,0 +1,13 @@
+HowTo deploy application in IBM Cloud
+
+01. generate distribution
+    from main project dir
+        ng build
+02. configure application for deployment
+    copy manifest.yml configuration file in dist/<projetc> directory  
+03. login to IBM Cloud
+        ibmcloud login
+        ibmcloud target --cf      
+03. deploy application on IBM Cloud
+    from dist/<projetc> directory, upload and deploy application
+        ibmcloud cf push
