@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/observable';
 
-import { PersonsService } from './persons.service';
+import { PersonsService } from './persons-db.service';
 import { Person } from './model/person';
 
 // main app component
