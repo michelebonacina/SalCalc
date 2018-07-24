@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/observable';
 
-import { PersonsService } from './persons-db.service';
-import { Person } from './model/person';
+import { PersonsService } from '../persons-db.service';
+import { Person } from '../model/person';
 
 // main app component
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css'],
     providers: [PersonsService]
 })
-export class AppComponent
+export class HomeComponent
 {
     title = 'SalCalc';                      // app title
     description = "Salary Calculator";      // app description
