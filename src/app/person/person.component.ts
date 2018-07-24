@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faTrash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 
 import { Person } from '../model/person';
-import { PersonsService } from '../persons-db.service';
+import { PersonsService } from '../services/persons-db.service';
 
 
 // defines component for person management

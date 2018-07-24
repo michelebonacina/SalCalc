@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/observable';
 
-import { Person } from './model/person';
+import { Person } from '../model/person';
 
 //
 // !!NOTE!! Use this service for db persistence. You can use only one persons-xx.service at time.
