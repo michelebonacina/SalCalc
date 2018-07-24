@@ -5,15 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
 import { PersonComponent } from './person/person.component';
-import { MockBackendService } from './mock-backend.service';
+// import { MockBackendService } from './mock-backend.service';     // uncomment for mock test service
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { PersonDetailsComponent } from './person-details/person-details.component';
 
 @NgModule({
     declarations: [
-        AppComponent,
+        HomeComponent,
         PersonComponent,
         NavMenuComponent,
         PersonDetailsComponent,
@@ -23,12 +23,12 @@ import { PersonDetailsComponent } from './person-details/person-details.componen
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
-        InMemoryWebApiModule.forRoot(MockBackendService),
+        // InMemoryWebApiModule.forRoot(MockBackendService),        // uncomment for mock test service
         FontAwesomeModule,
     ],
     providers: [],
     bootstrap: [
-        AppComponent, 
+        HomeComponent, 
         NavMenuComponent,
     ],
 })

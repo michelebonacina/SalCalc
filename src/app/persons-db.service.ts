@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/observable';
 
 import { Person } from './model/person';
 
+//
+// !!NOTE!! Use this service for db persistence. You can use only one persons-xx.service at time.
+//
+
 // defines services available for persons management
 // - getObservable: returns persons observable for change events subscribing
-// - getPersons: gets persons and raises update event
+// - getPersons: gets persons list and raises an update event
 @Injectable({
     providedIn: 'root'
 })
 export class PersonsService
 {
-    url: string = 'api/persons';                    // url for getting persons from backend
+    url: string = 'http://localhost:6001';          // url for getting persons from persistence server
     persons: Person[];                              // persons list
     public personObservable: Observable<any>;       // async observable person
     observer: any;                                  // async observer instance
@@ -41,6 +45,13 @@ export class PersonsService
         return this.personObservable;
     }
 
+    // manages promise error
+    handleErrorPromise(error: Response | any)
+    {
+        console.error(error.message || error);
+        return Promise.reject(error.message || error);
+    }
+
     // gets persons list
     // connects to backend and gets persons list
     // after that, invokes observer for sending persons list to all subscribers
@@ -48,7 +59,7 @@ export class PersonsService
     {
         // calls backend and gets response
         this.http
-            .get(this.url)
+            .get(this.url + '/persons/list')
             .toPromise()
             .then(
                 (response) =>
@@ -67,8 +78,13 @@ export class PersonsService
     addPerson(person: Person)
     {
         // posts person to backend and gets response
+        var headers = new Headers();
+        headers.append('content-type', 'application/json');
+        var requestOptions = new RequestOptions();
+        requestOptions.headers = headers;
+        requestOptions.withCredentials = true;
         this.http
-            .post(this.url, JSON.stringify(person))
+            .post(this.url + '/persons/create', JSON.stringify(person), requestOptions)
             .toPromise()
             .then(
                 (response) =>
@@ -76,7 +92,8 @@ export class PersonsService
                     // gets persons
                     this.getPersons();
                 }
-            );
+            )
+            .catch(this.handleErrorPromise);
     }
 
     // modifies a person
@@ -85,8 +102,14 @@ export class PersonsService
     modifyPerson(person: Person)
     {
         // posts person to backend and gets response
+        // posts person to backend and gets response
+        var headers = new Headers();
+        headers.append('content-type', 'application/json');
+        var requestOptions = new RequestOptions();
+        requestOptions.headers = headers;
+        requestOptions.withCredentials = true;
         this.http
-            .post(`${this.url}/${person.id}`, JSON.stringify(person))
+            .post(this.url + '/persons/update/' + person.id, JSON.stringify(person), requestOptions)
             .toPromise()
             .then(
                 (response) =>
@@ -94,7 +117,8 @@ export class PersonsService
                     // gets persons
                     this.getPersons();
                 }
-            );
+            )
+            .catch(this.handleErrorPromise);;
     }
 
     // deletes a person
@@ -104,7 +128,7 @@ export class PersonsService
     {
         // deletes person from backend and gets response
         this.http
-            .delete(`${this.url}/${person.id}`)
+            .delete(this.url + '/persons/delete/' + person.id)
             .toPromise()
             .then(
                 (response) =>

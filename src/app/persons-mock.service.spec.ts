@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { PersonsService } from './persons.service';
+import { PersonsService } from './persons-mock.service';
 
 describe('PersonsService', () =>
 {
