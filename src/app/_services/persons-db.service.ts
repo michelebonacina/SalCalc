@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/observable';
 
-import { Person } from '../model/person';
+import { Person } from '../_model';
 
 //
 // !!NOTE!! Use this service for db persistence. You can use only one persons-xx.service at time.
@@ -11,9 +11,7 @@ import { Person } from '../model/person';
 // defines services available for persons management
 // - getObservable: returns persons observable for change events subscribing
 // - getPersons: gets persons list and raises an update event
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class PersonsService
 {
     url: string = 'http://localhost:6001';          // url for getting persons from persistence server

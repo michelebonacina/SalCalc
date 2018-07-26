@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Person } from '../model/person';
-import { PersonsService } from '../services/persons-db.service';
+import { Person } from '../_model';
+import { PersonsService } from '../_services';
 
 // defines component for person details management
 // - resetPersonForm: removes person's data from form field

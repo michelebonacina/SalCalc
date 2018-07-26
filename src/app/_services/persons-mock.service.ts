@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/observable';
 
-import { Person } from '../model/person';
+import { Person } from '../_model';
 
 //
 // !!NOTE!! Use this service for mock testing. You can use only one persons-xx.service at time.

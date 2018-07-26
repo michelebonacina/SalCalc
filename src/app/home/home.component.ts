@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/observable';
 
-import { PersonsService } from '../services/persons-db.service';
-import { Person } from '../model/person';
+import { PersonsService } from '../_services';
+import { Person } from '../_model';
 
 // main app component
 @Component({

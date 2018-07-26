@@ -2,8 +2,8 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faTrash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 
-import { Person } from '../model/person';
-import { PersonsService } from '../services/persons-db.service';
+import { Person } from '../_model';
+import { PersonsService } from '../_services';
 
 
 // defines component for person management
@@ -32,12 +32,14 @@ export class PersonComponent implements OnInit
         private element: ElementRef
     ) 
     {
-        this.personForm = formBuilder.group({
-            'id': [null],
-            'surname': [null, Validators.required],
-            'name': [null, Validators.required],
-            'birthdate': [null],
-        });
+        this.personForm = formBuilder.group(
+            {
+                'id': [null],
+                'surname': [null, Validators.required],
+                'name': [null, Validators.required],
+                'birthdate': [null],
+            }
+        );
     }
 
     // runs on component startup
