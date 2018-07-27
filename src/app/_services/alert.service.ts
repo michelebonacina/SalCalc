@@ -2,10 +2,14 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { Router, NavigationStart } from '@angular/router';
 
+// service for alert message management
+// - success: show a success message
+// - error: show an error message
+// - getMessage(): returns the observable message
 @Injectable({ providedIn: 'root' })
 export class AlertService
 {
-    private subject: Subject<any> = new Subject<any>();     // observable alert's subject
+    private subject: Subject<any> = new Subject<any>();     // observable alert subject
     private keepAfterNavigationChange: boolean = false;     // keep message after a single location change (true) or not (false)
 
     //create a new alert service
@@ -15,7 +19,7 @@ export class AlertService
         this.router.events.subscribe(
             (event) =>
             {
-                // check event's type
+                // check event type
                 if (event instanceof NavigationStart)
                 {
                     // it's a navigation event
@@ -48,6 +52,13 @@ export class AlertService
         // register an error message
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'error', text: message });
+    }
+
+    // clear error message
+    clear()
+    {
+        this.keepAfterNavigationChange = false;
+        this.subject.next();
     }
 
     // return message

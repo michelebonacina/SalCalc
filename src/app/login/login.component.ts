@@ -3,8 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { User } from '../_model';
-import { AuthenticationService } from '../_services';
-import { ROUTING } from '../app.routing';
+import { AuthenticationService, AlertService } from '../_services';
 
 @Component({
     selector: 'app-login',
@@ -22,6 +21,7 @@ export class LoginComponent implements OnInit
         private formBuilder: FormBuilder,
         private authenticationService: AuthenticationService,
         private router: Router,
+        private alertService: AlertService
     ) { }
 
     // run on component startup
@@ -45,6 +45,8 @@ export class LoginComponent implements OnInit
     {
         // reset form
         this.loginForm.reset();
+        // clear error message
+        this.alertService.clear();
         // stop standard submit operation
         event.preventDefault();
     }
@@ -57,6 +59,8 @@ export class LoginComponent implements OnInit
     // login to application
     onSubmit() 
     {
+        // clear error message
+        this.alertService.clear();
         // check login form
         if (this.loginForm.valid) 
         {
@@ -69,6 +73,11 @@ export class LoginComponent implements OnInit
                 (user) =>
                 {
                     this.router.navigate(['/']);
+                },
+                (error) =>
+                {
+                    // show error message
+                    this.alertService.error("User unknown!");
                 }
             );
 

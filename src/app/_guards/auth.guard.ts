@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
+// check navigation authorization
+// - canActivate: check user authentication for proceed, otherwise redirect to login page
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate
 {
@@ -12,7 +14,8 @@ export class AuthGuard implements CanActivate
     // otherwise redirect to login page
     canActivate(
         next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
+        state: RouterStateSnapshot
+    ): Observable<boolean> | Promise<boolean> | boolean
     {
         // check authorization
         if (localStorage.getItem('currentUser'))
@@ -25,4 +28,5 @@ export class AuthGuard implements CanActivate
         // cannot proceed
         return false;
     }
+
 }

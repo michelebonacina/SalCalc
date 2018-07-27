@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faTrash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
+import { Observable } from 'rxjs';
 
 import { Person } from '../_model';
 import { PersonsService } from '../_services';
@@ -20,19 +21,22 @@ import { PersonsService } from '../_services';
 })
 export class PersonComponent implements OnInit
 {
-    @Input("persons") persons: Person[];                        // persons list
-    @Input("personsService") personsService: PersonsService;    // persons persistence manager
+    persons: Person[];                        // persons list
     personForm: FormGroup;                                      // person's form
     faTrash = faTrash;                                          // trash icon
     faAddressCard = faAddressCard;                              // details icon
     showNewPersonForm: boolean = false;                         // identify person form visibility
+    personsObservable: Observable<any>;     // observable person for getting changes
 
     // creates a new person component
-    constructor(formBuilder: FormBuilder,
-        private element: ElementRef
-    ) 
+    constructor(private formBuilder: FormBuilder, private personsService: PersonsService) {
+        this.persons = [];
+     }
+
+    // runs on component startup
+    ngOnInit()
     {
-        this.personForm = formBuilder.group(
+        this.personForm = this.formBuilder.group(
             {
                 'id': [null],
                 'surname': [null, Validators.required],
@@ -40,11 +44,16 @@ export class PersonComponent implements OnInit
                 'birthdate': [null],
             }
         );
-    }
-
-    // runs on component startup
-    ngOnInit()
-    {
+        // gets observable person from person service
+        this.personsObservable = this.personsService.getObservable();
+        // subscribes to observable for getting person changes
+        this.personsObservable.subscribe(
+            (persons) => 
+            {
+                // gets persons list from observable
+                this.persons = persons;
+            }
+        );
     }
 
     //

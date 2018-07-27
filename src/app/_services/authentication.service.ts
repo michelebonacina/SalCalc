@@ -3,16 +3,18 @@ import { User } from '../_model';
 import { Http } from '@angular/http';
 import { environment } from '../../environments';
 
+// manages user authentication
+// - login: check user credentials and login
+// - logout: logout user
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService
 {
 
     // create a new user service
-    constructor(private http: Http) 
-    {
-    }
+    constructor(private http: Http) { }
 
     // login user
+    // call api for user authentication and on success store user in session
     login(user: User)
     {
         // call api login and get response
@@ -26,6 +28,7 @@ export class AuthenticationService
             .then(
                 (response) =>
                 {
+                    // response ok
                     // get user from response
                     var responseUser = response.json();
                     // create authenticated user
@@ -37,12 +40,6 @@ export class AuthenticationService
                     // return authenticated user
                     return currentUser;
                 })
-            .catch(
-                (error) =>
-                {
-                    console.log("Authentication error");
-                }
-            );
     }
 
     // logout user
@@ -51,4 +48,5 @@ export class AuthenticationService
         // remove stored user from session
         localStorage.removeItem('currentUser');
     }
+
 }

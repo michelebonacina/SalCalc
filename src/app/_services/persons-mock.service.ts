@@ -8,9 +8,9 @@ import { Person } from '../_model';
 // !!NOTE!! Use this service for mock testing. You can use only one persons-xx.service at time.
 //
 
-// defines services available for persons management
-// - getObservable: returns persons observable for change events subscribing
-// - getPersons: gets persons and raises update event
+// define services available for persons management
+// - getObservable: return persons observable for change events subscribing
+// - getPersons: get persons and raise update event
 @Injectable({
     providedIn: 'root'
 })
@@ -21,74 +21,74 @@ export class PersonsService
     public personObservable: Observable<any>;       // async observable person
     observer: any;                                  // async observer instance
 
-    // creates a new persons service
+    // create a new persons service
     constructor(private http: Http)
     {
-        // creates the observable
+        // create the observable
         this.personObservable = new Observable(
             (observer) =>
             {
-                // stores observable instance 
+                // store observable instance 
                 this.observer = observer;
-                // gets persons and raises update event
+                // get persons and raise update event
                 this.getPersons();
             }
         );
     }
 
-    // runs on component startup
+    // run on component startup
     ngOnInit() { }
 
-    // returns person observable
+    // return person observable
     getObservable()
     {
         return this.personObservable;
     }
 
-    // gets persons list
-    // connects to backend and gets persons list
-    // after that, invokes observer for sending persons list to all subscribers
+    // get persons list
+    // connect to backend and get persons list
+    // after that, invoke observer for sending persons list to all subscribers
     getPersons()
     {
-        // calls backend and gets response
+        // call backend and get response
         this.http
             .get(this.url)
             .toPromise()
             .then(
                 (response) =>
                 {
-                    // gets persons from backend response
+                    // get persons from backend response
                     this.persons = response.json();
-                    // sends update event to subscribers
+                    // send update event to subscribers
                     this.observer.next(this.persons);
                 }
             );
     }
 
-    // adds a person
-    // connects to backend and adds a person to persons list
-    // after that, reloads persons list
+    // add a person
+    // connect to backend and add a person to persons list
+    // after that, reload persons list
     addPerson(person: Person)
     {
-        // posts person to backend and gets response
+        // post person to backend and gets response
         this.http
             .post(this.url, JSON.stringify(person))
             .toPromise()
             .then(
                 (response) =>
                 {
-                    // gets persons
+                    // get persons
                     this.getPersons();
                 }
             );
     }
 
-    // modifies a person
-    // connects to backend and modifies person's data
-    // after that, reloads persons list
+    // modifie a person
+    // connect to backend and modifie person's data
+    // after that, reload persons list
     modifyPerson(person: Person)
     {
-        // posts person to backend and gets response
+        // post person to backend and get response
         this.http
             .post(`${this.url}/${person.id}`, JSON.stringify(person))
             .toPromise()
@@ -101,19 +101,19 @@ export class PersonsService
             );
     }
 
-    // deletes a person
-    // connects to backend and deletes a person from persons list
-    // after thar, reloads persons list
+    // delete a person
+    // connect to backend and delete a person from persons list
+    // after thar, reload persons list
     deletePerson(person: Person)
     {
-        // deletes person from backend and gets response
+        // delete person from backend and get response
         this.http
             .delete(`${this.url}/${person.id}`)
             .toPromise()
             .then(
                 (response) =>
                 {
-                    // gets persons
+                    // get persons
                     this.getPersons();
                 }
             );

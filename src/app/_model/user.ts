@@ -1,6 +1,8 @@
-// defines a user
+// define a user
 export class User
 {
-    username: string;   // person's name
-    password: string;   // person's surname
+    id: number;                     // user unique indentifier  
+    username: string;               // user username
+    password: string;               // user password
+    showDetails: Boolean = false;   // identify if user details are shown
 }

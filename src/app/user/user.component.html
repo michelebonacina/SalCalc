@@ -1,0 +1,53 @@
+<div id="userContainer" class="w3-container" id="contact" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-green">
+        <b>User</b>
+    </h1>
+    <hr class="separator w3-round">
+
+    <div *ngIf="!showNewUserForm">
+        <button class="w3-button w3-margin-bottom w3-border w3-border-green" (click)="prepareUser();">Add new User</button>
+    </div>
+
+    <div *ngIf="showNewUserForm">
+        <form [formGroup]="userForm" (ngSubmit)="createUser($event, userForm)">
+            <div class="w3-section-small">
+                <label>Username</label><span class="w3-text-red" *ngIf="userForm.controls['username'].validator && userForm.controls['username'].validator('').required">*</span>
+                <input type="text" class="w3-input-inline w3-border" formControlName="username" [ngClass]="{'hasError':!userForm.controls['username'].valid, 'isCorrect':userForm.controls['username'].valid}" autofocus>
+            </div>
+            <div class="w3-section-small">
+                <label>Password</label><span class="w3-text-red" *ngIf="userForm.controls['password'].validator && userForm.controls['password'].validator('').required">*</span>
+                <input type="password" class="w3-input-inline w3-border" formControlName="password" [ngClass]="{'hasError':!userForm.controls['password'].valid, 'isCorrect':userForm.controls['password'].valid}">
+            </div>
+            <button class="w3-button w3-border w3-border-green" [disabled]="!userForm.valid">Add</button>
+            <button class="w3-button w3-border w3-border-green" (click)="resetUserForm($event, userForm)">Reset</button>
+            <button class="w3-button w3-border w3-border-green" (click)="cancelUserForm($event, userForm)">Cancel</button>
+            <hr class="separator w3-round">
+        </form>
+    </div>
+
+    <div class="w3-half">
+        <table class="w3-table w3-bordered w3-striped">
+            <tr>
+                <th class="w3-green w3-xlarge w3-center" colspan="4">Users</th>
+            </tr>
+            <tr class="w3-green">
+                <th></th>
+                <th>Username</th>
+            </tr>
+            <tr id="row_{{i}}" *ngFor="let user of users; let i = index">
+                <td class="w3-cell-middle buttons-area">
+                    <button class="w3-button w3-padding-xsmall" (click)="showUserDetails($event, user);">
+                        <fa-icon [icon]="faAddressCard"></fa-icon>
+                    </button>
+                    <button class="w3-button w3-padding-xsmall" (click)="deleteUser($event, user);">
+                        <fa-icon [icon]="faTrash"></fa-icon>
+                    </button>
+                </td>
+                <td *ngIf="!user.showDetails" class="w3-cell-middle">{{user.username}}</td>
+                <td *ngIf="user.showDetails" class="w3-cell-middle" colspan="3">
+                    <app-user-details [user]="user" [usersService]="usersService"></app-user-details>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

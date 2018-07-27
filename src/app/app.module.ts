@@ -14,6 +14,8 @@ import { PersonDetailsComponent } from './person-details/person-details.componen
 import { RootComponent } from './root/root.component';
 import { LoginComponent } from './login/login.component';
 import { AlertComponent } from './alert/alert.component';
+import { UserComponent } from './user/user.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +26,8 @@ import { AlertComponent } from './alert/alert.component';
         RootComponent,
         LoginComponent,
         AlertComponent,
+        UserComponent,
+        UserDetailsComponent,
     ],
     imports: [
         BrowserModule,

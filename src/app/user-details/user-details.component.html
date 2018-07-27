@@ -1,0 +1,19 @@
+<div *ngIf="showModifyUserForm">
+    <form [formGroup]="userForm" (ngSubmit)="modifyUser($event, userForm)">
+        <div class="w3-section-small">
+            <label>Username</label><span class="w3-text-red" *ngIf="userForm.controls['username'].validator && userForm.controls['username'].validator('').required">*</span>
+            <input type="text" class="w3-input-inline w3-border" formControlName="username" [ngClass]="{'hasError':!userForm.controls['username'].valid, 'isCorrect':userForm.controls['username'].valid}"
+                autofocus>
+        </div>
+        <button class="w3-button w3-border w3-border-green" [disabled]="!userForm.valid || userForm.pristine">Save</button>
+        <button class="w3-button w3-border w3-border-green" (click)="cancelUserForm($event, userForm)">Cancel</button>
+    </form>
+</div>
+
+<div *ngIf="!showModifyUserForm">
+    <div class="w3-section-small">
+        <label>Username:</label>
+        <span class="w3-data-inline">{{user.username}}</span>
+    </div>
+    <button class="w3-button w3-border w3-border-green" (click)="modifyUserForm($event)">Modify</button>
+</div>
