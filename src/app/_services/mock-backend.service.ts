@@ -4,10 +4,10 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 export class MockBackendService implements InMemoryDbService
 {
 
-    // creates new sample data service
+    // create new sample data service
     constructor() { }
 
-    // creates and returns the persons sample list
+    // create and return the persons sample list
     createDb()
     {
         const persons = [

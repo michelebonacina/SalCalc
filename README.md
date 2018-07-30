@@ -8,6 +8,7 @@ Calculate net from gross salary and vice-versa.
 ## History
 - version 0.0.0 - starting Angular project
 - version 0.0.1 - added Person management
+- version 0.0.2 - added User management, authentication, access control
 
 ## ToDo
 - Add constant values service mamagement

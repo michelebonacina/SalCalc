@@ -1,3 +1,8 @@
-<!-- !PERSON CONTENT! -->
-<app-person [persons]="persons" [personsService]="personsService">
-</app-person>
+<!-- !NAV MENU CONTENT -->
+<app-nav-menu></app-nav-menu>
+
+<!-- !PAGE CONTENT -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+    <app-person *ngIf="page=='person'"></app-person>
+    <app-user *ngIf="page=='user'"></app-user>
+</div>
