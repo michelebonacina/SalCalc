@@ -22,15 +22,16 @@ import { UsersService } from '../_services/users-db.service';
 export class UserComponent implements OnInit
 {
     users: User[];                          // users list
-    userForm: FormGroup;                                    // user form
-    faTrash = faTrash;                                      // trash icon
-    faAddressCard = faAddressCard;                          // details icon
-    showNewUserForm: boolean = false;                       // identify user form visibility
-    usersObservable: Observable<any>;                        // observable person for getting changes
+    userForm: FormGroup;                    // user form
+    faTrash = faTrash;                      // trash icon
+    faAddressCard = faAddressCard;          // details icon
+    showNewUserForm: boolean = false;       // identify user form visibility
+    usersObservable: Observable<any>;       // observable person for getting changes
 
 
     // create a new user component
-    constructor(private formBuilder: FormBuilder, public usersService: UsersService) { 
+    constructor(private formBuilder: FormBuilder, public usersService: UsersService)
+    {
         this.users = [];
     }
 
@@ -44,17 +45,16 @@ export class UserComponent implements OnInit
                 'password': [null, Validators.required],
             }
         );
-        // gets observable user from user service
+        // get observable user from user service
         this.usersObservable = this.usersService.getObservable();
-        // subscribes to observable for getting person changes
+        // subscribe to observable for getting person changes
         this.usersObservable.subscribe(
             (users) => 
             {
-                // gets persons list from observable
+                // get persons list from observable
                 this.users = users;
             }
         )
-
     }
 
     //
@@ -64,9 +64,9 @@ export class UserComponent implements OnInit
     // reset the form data
     resetUserForm(event: any)
     {
-        // resets form
+        // reset form
         this.userForm.reset();
-        // stops standard submit operation
+        // stop standard submit operation
         event.preventDefault();
     }
 
@@ -77,7 +77,7 @@ export class UserComponent implements OnInit
         this.userForm.reset();
         // show user form
         this.showNewUserForm = false;
-        // stops standard submit operation
+        // stop standard submit operation
         event.preventDefault();
     }
 
@@ -133,5 +133,6 @@ export class UserComponent implements OnInit
             this.usersService.deleteUser(user);
         }
     }
+
 }
 

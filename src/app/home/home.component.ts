@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 // main app component
+// manage site main page and specific data visualization
 @Component({
     selector: 'app-root',
     templateUrl: './home.component.html',
@@ -21,6 +22,7 @@ export class HomeComponent
         this.activatedRoute.params.subscribe(
             (params: Params) =>
             {
+                // get page from navigation selection
                 this.page = params['page'];
             }
         );

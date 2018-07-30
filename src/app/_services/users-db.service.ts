@@ -108,7 +108,7 @@ export class UsersService
         requestOptions.headers = headers;
         requestOptions.withCredentials = true;
         this.http
-            .post(`${environment.apiUrl}/api/user/update/` + user.username, JSON.stringify(user), requestOptions)
+            .post(`${environment.apiUrl}/api/user/update/` + user.id, JSON.stringify(user), requestOptions)
             .toPromise()
             .then(
                 (response) =>

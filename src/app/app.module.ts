@@ -2,13 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';     // uncomment for mock test service
+// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';        // uncomment for mock test service
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {ROUTING} from './app.routing';
 
 import { HomeComponent } from './home/home.component';
 import { PersonComponent } from './person/person.component';
-// import { MockBackendService } from './services/mock-backend.service';     // uncomment for mock test service
+// import { MockBackendService } from './services/mock-backend.service';    // uncomment for mock test service
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { PersonDetailsComponent } from './person-details/person-details.component';
 import { RootComponent } from './root/root.component';

@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { User } from '../_model';
 import { AuthenticationService, AlertService } from '../_services';
 
+// login component
+// manage application authorization ad access 
+// - resetLoginForm: reset login form data
+// - onSumbit: manage authentication with login form posted data
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -18,10 +22,10 @@ export class LoginComponent implements OnInit
 
     // create a new login component
     constructor(
-        private formBuilder: FormBuilder,
-        private authenticationService: AuthenticationService,
-        private router: Router,
-        private alertService: AlertService
+        private formBuilder: FormBuilder,                       // form builer, for form management
+        private authenticationService: AuthenticationService,   // authentication service
+        private router: Router,                                 // navigation router
+        private alertService: AlertService                      // alert service, for error message management
     ) { }
 
     // run on component startup
@@ -80,7 +84,7 @@ export class LoginComponent implements OnInit
                     this.alertService.error("User unknown!");
                 }
             );
-
         }
     }
+
 }

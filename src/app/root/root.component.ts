@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
+// application root component
+// this is the first component called by the application
+// used for access and authorization management
 @Component({
-  selector: 'app-root',
-  templateUrl: './root.component.html',
+    selector: 'app-root',
+    templateUrl: './root.component.html',
 })
-export class RootComponent implements OnInit {
+export class RootComponent implements OnInit
+{
 
-  constructor() { }
+    // create a new component
+    constructor() { }
 
-  ngOnInit() {
-  }
+    // run on component startup
+    ngOnInit() { }
 
 }

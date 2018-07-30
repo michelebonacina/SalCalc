@@ -4,13 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Person } from '../_model';
 import { PersonsService } from '../_services';
 
-// defines component for person details management
-// - resetPersonForm: removes person's data from form field
-// - cancelPersonForm: cancels person form without saving and hides form
-// - preparePresonForm: prepares and shows person form
+// define component for person details management
+// - cancelPersonForm: cancel person form without saving and hide form
+// - modifyPersonForm: show person form with data
+// - modifyPerson: get person data from form and update in persistence
 // - showPersonDetails: shows details of a selected person
-// - createPerson: gets and checks person's data and creates in persistence
-// - deletePerson: shows a confirm message and deletes a person
 @Component({
     selector: 'app-person-details',
     templateUrl: './person-details.component.html',
@@ -20,10 +18,10 @@ export class PersonDetailsComponent implements OnInit
 {
     @Input("person") person: Person;                            // person
     @Input("personsService") personsService: PersonsService;    // persons persistence manager
-    personForm: FormGroup;                                      // person's form
-    showModifyPersonForm: boolean = false;                      // specify person's modify form visibility
+    personForm: FormGroup;                                      // person form
+    showModifyPersonForm: boolean = false;                      // specify person modify form visibility
 
-    // creates a new person details component
+    // create a new person detail component
     constructor(formBuilder: FormBuilder,
         private element: ElementRef
     ) 
@@ -36,33 +34,31 @@ export class PersonDetailsComponent implements OnInit
         });
     }
 
-    // runs on component startpu
-    ngOnInit()
-    {
-    }
+    // run on component startpu
+    ngOnInit() { }
 
     //
     // ## FORM OPERATIONS ##
     //
 
-    // cancels data from person's form fiels and hides form
+    // cancel data from person form field and hides form
     cancelPersonForm(event, personForm)
     {
-        // resets person's form
+        // reset person's form
         this.personForm.reset();
-        // hides modify form
+        // hide modify form
         this.showModifyPersonForm = false;
     }
 
-    // shows modify person's form filling fields with person's data
+    // show modify person form filling fields with person data
     modifyPersonForm(event)
     {
-        // updates form fields with person's data
+        // update form fields with person data
         this.personForm.controls["id"].setValue(this.person.id);
         this.personForm.controls["surname"].setValue(this.person.surname);
         this.personForm.controls["name"].setValue(this.person.name);
         this.personForm.controls["birthdate"].setValue(this.person.birthdate);
-        // shows modify form
+        // show modify form
         this.showModifyPersonForm = true;
     }
 
@@ -70,20 +66,20 @@ export class PersonDetailsComponent implements OnInit
     // ## PERSON OPERATION ##
     //
 
-    // gets person's data from form fields and updates in persistence
-    // at the end, hides form
+    // get person data from form field and update in persistence
+    // at the end, hide form
     modifyPerson(event, personForm)
     {
         if (this.personForm.valid)
         {
-            // the data are valid
-            // creates new person
+            // data are valid
+            // create new person
             let person: Person = new Person();
             person.id = this.personForm.controls["id"].value;
             person.surname = this.personForm.controls["surname"].value;
             person.name = this.personForm.controls["name"].value;
             person.birthdate = this.personForm.controls["birthdate"].value;
-            // adds person to list            
+            // add person to list            
             this.personsService.modifyPerson(person);
             // hide modify form
             this.personForm.reset();
