@@ -3,7 +3,7 @@ import { User } from '../_model';
 import { Observable } from 'rxjs';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments';
 
 //
 // !!NOTE!! Use this service for db persistence. You can use only one user-xx.service at time.

@@ -19,11 +19,12 @@ export class HomeComponent
 
     // run on component startup
     ngOnInit() {
-        this.activatedRoute.params.subscribe(
+        this.activatedRoute.queryParams.subscribe(
             (params: Params) =>
             {
                 // get page from navigation selection
                 this.page = params['page'];
+                console.log(this.page);
             }
         );
      }

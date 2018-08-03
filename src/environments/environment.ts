@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:6001',
+  apiUrl: 'https://salcalcdb-led.eu-gb.mybluemix.net',
 };
 
 /*

@@ -8,9 +8,9 @@ import { UserComponent } from './user';
 
 // define application routes to compoments
 export const AppRoutes: Routes = [
-    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'login', component: LoginComponent },
-    { path: '**', redirectTo: 'home' },
+    { path: 'index.html', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'index.html?page=login', component: LoginComponent },
+    { path: '**', redirectTo: 'index.html' },
 
 ];
 

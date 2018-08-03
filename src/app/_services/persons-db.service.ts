@@ -3,7 +3,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/observable';
 
 import { Person } from '../_model';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments';
 
 //
 // !!NOTE!! Use this service for db persistence. You can use only one persons-xx.service at time.

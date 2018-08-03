@@ -26,7 +26,7 @@ export class NavMenuComponent implements OnInit
         // call login service form logout
         this.authenticationService.logout();
         // go to login page
-        this.router.navigate(['/login']);
+        this.router.navigate(['/index.html?page=login']);
     }
 
 }

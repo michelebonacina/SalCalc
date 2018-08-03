@@ -1,13 +1,16 @@
 HowTo deploy application in IBM Cloud
 
-01. generate distribution
+01. configure SalCalcDB api url
+    open src/environments/environment.ts
+    change apiUrl value with salcalcdb app base url
+02. generate distribution
     from main project dir
         ng build
-02. configure application for deployment
+03. configure application for deployment
     copy manifest.yml configuration file in dist/<projetc> directory  
-03. login to IBM Cloud
+04. login to IBM Cloud
         ibmcloud login
         ibmcloud target --cf      
-03. deploy application on IBM Cloud
+05. deploy application on IBM Cloud
     from dist/<projetc> directory, upload and deploy application
         ibmcloud cf push
