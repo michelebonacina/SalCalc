@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/observable';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Person } from '../_model';
+import { Person, User } from '../_model';
 import { environment } from '../../environments';
 
 //
@@ -15,13 +15,26 @@ import { environment } from '../../environments';
 @Injectable({ providedIn: 'root' })
 export class PersonsService
 {
-    persons: Person[];                              // persons list
     public personObservable: Observable<any>;       // async observable person
     observer: any;                                  // async observer instance
+    private httpOptions: any;                       // authorization token                                    
+
 
     // create a new persons service
-    constructor(private http: Http)
+    constructor(private httpClient: HttpClient) 
     {
+        // get authenticated user
+        var currentUser: User = JSON.parse(localStorage.getItem('currentUser'));
+        // prepare the authorization token
+        this.httpOptions =
+            {
+                headers: new HttpHeaders(
+                    {
+                        'Authorization': 'Basic ' + btoa(currentUser.username + ':' + currentUser.password),
+                        'Content-Type': 'application/json'
+                    }
+                )
+            };
         // create the observable
         this.personObservable = new Observable(
             (observer) =>
@@ -56,16 +69,19 @@ export class PersonsService
     getPersons()
     {
         // call backend and get response
-        this.http
-            .get(`${environment.apiUrl}/api/person/list`)
-            .toPromise()
-            .then(
-                (response) =>
+        this.httpClient
+            .get(`${environment.apiUrl}/api/person/list`, this.httpOptions)
+            .subscribe(
                 {
-                    // get persons from backend response
-                    this.persons = response.json();
-                    // send update event to subscribers
-                    this.observer.next(this.persons);
+                    next: response =>
+                    {
+                        // send update event to subscribers
+                        this.observer.next(response);
+                    },
+                    error: error =>
+                    {
+                        this.handleErrorPromise(error);
+                    }
                 }
             );
     }
@@ -76,22 +92,21 @@ export class PersonsService
     addPerson(person: Person)
     {
         // post person to backend and get response
-        var headers = new Headers();
-        headers.append('content-type', 'application/json');
-        var requestOptions = new RequestOptions();
-        requestOptions.headers = headers;
-        requestOptions.withCredentials = true;
-        this.http
-            .post(`${environment.apiUrl}/api/person/create`, JSON.stringify(person), requestOptions)
-            .toPromise()
-            .then(
-                (response) =>
+        this.httpClient
+            .post(`${environment.apiUrl}/api/person/create`, JSON.stringify(person), this.httpOptions)
+            .subscribe(
                 {
-                    // get persons
-                    this.getPersons();
+                    next: response =>
+                    {
+                        // get persons
+                        this.getPersons();
+                    },
+                    error: error =>
+                    {
+                        this.handleErrorPromise(error);
+                    }
                 }
-            )
-            .catch(this.handleErrorPromise);
+            );
     }
 
     // modifie a person
@@ -100,23 +115,21 @@ export class PersonsService
     modifyPerson(person: Person)
     {
         // post person to backend and get response
-        // post person to backend and get response
-        var headers = new Headers();
-        headers.append('content-type', 'application/json');
-        var requestOptions = new RequestOptions();
-        requestOptions.headers = headers;
-        requestOptions.withCredentials = true;
-        this.http
-            .post(`${environment.apiUrl}/api/person/update/` + person.id, JSON.stringify(person), requestOptions)
-            .toPromise()
-            .then(
-                (response) =>
+        this.httpClient
+            .post(`${environment.apiUrl}/api/person/update/` + person.id, JSON.stringify(person), this.httpOptions)
+            .subscribe(
                 {
-                    // gets persons
-                    this.getPersons();
+                    next: response =>
+                    {
+                        // gets persons
+                        this.getPersons();
+                    },
+                    error: error =>
+                    {
+                        this.handleErrorPromise(error);
+                    }
                 }
-            )
-            .catch(this.handleErrorPromise);;
+            );
     }
 
     // delete a person
@@ -125,14 +138,19 @@ export class PersonsService
     deletePerson(person: Person)
     {
         // delete person from backend and get response
-        this.http
-            .delete(`${environment.apiUrl}/api/person/delete/` + person.id)
-            .toPromise()
-            .then(
-                (response) =>
+        this.httpClient
+            .delete(`${environment.apiUrl}/api/person/delete/` + person.id, this.httpOptions)
+            .subscribe(
                 {
-                    // get persons
-                    this.getPersons();
+                    next: response =>
+                    {
+                        // get persons
+                        this.getPersons();
+                    },
+                    error: error =>
+                    {
+                        this.handleErrorPromise(error);
+                    }
                 }
             );
     }

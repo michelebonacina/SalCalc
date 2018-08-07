@@ -53,14 +53,15 @@ export class PersonsService
         // call backend and get response
         this.http
             .get(this.url)
-            .toPromise()
-            .then(
-                (response) =>
+            .subscribe(
                 {
-                    // get persons from backend response
-                    this.persons = response.json();
-                    // send update event to subscribers
-                    this.observer.next(this.persons);
+                    next: response =>
+                    {
+                        // get persons from backend response
+                        this.persons = response.json();
+                        // send update event to subscribers
+                        this.observer.next(this.persons);
+                    }
                 }
             );
     }
@@ -73,12 +74,13 @@ export class PersonsService
         // post person to backend and gets response
         this.http
             .post(this.url, JSON.stringify(person))
-            .toPromise()
-            .then(
-                (response) =>
+            .subscribe(
                 {
-                    // get persons
-                    this.getPersons();
+                    next: response =>
+                    {
+                        // get persons
+                        this.getPersons();
+                    }
                 }
             );
     }
@@ -91,12 +93,13 @@ export class PersonsService
         // post person to backend and get response
         this.http
             .post(`${this.url}/${person.id}`, JSON.stringify(person))
-            .toPromise()
-            .then(
-                (response) =>
+            .subscribe(
                 {
-                    // gets persons
-                    this.getPersons();
+                    next: response =>
+                    {
+                        // gets persons
+                        this.getPersons();
+                    }
                 }
             );
     }
@@ -109,12 +112,13 @@ export class PersonsService
         // delete person from backend and get response
         this.http
             .delete(`${this.url}/${person.id}`)
-            .toPromise()
-            .then(
-                (response) =>
+            .subscribe(
                 {
-                    // get persons
-                    this.getPersons();
+                    next: response =>
+                    {
+                        // get persons
+                        this.getPersons();
+                    }
                 }
             );
     }

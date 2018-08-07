@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiUrl: 'https://salcalcdb-led.eu-gb.mybluemix.net',
+    production: false,
+    apiUrl: 'http://localhost:6002', // 'https://salcalcdb-led.eu-gb.mybluemix.net',
+    companyName: 'LED S.p.A.',
 };
 
 /*

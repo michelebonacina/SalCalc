@@ -17,21 +17,23 @@ export class AlertService
     {
         // clear alert message on route change
         this.router.events.subscribe(
-            (event) =>
             {
-                // check event type
-                if (event instanceof NavigationStart)
+                next: event =>
                 {
-                    // it's a navigation event
-                    if (this.keepAfterNavigationChange)
+                    // check event type
+                    if (event instanceof NavigationStart)
                     {
-                        // keep only a single location change
-                        this.keepAfterNavigationChange = false
-                    }
-                    else 
-                    {
-                        // clear alert
-                        this.subject.next();
+                        // it's a navigation event
+                        if (this.keepAfterNavigationChange)
+                        {
+                            // keep only a single location change
+                            this.keepAfterNavigationChange = false
+                        }
+                        else 
+                        {
+                            // clear alert
+                            this.subject.next();
+                        }
                     }
                 }
             }

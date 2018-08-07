@@ -49,12 +49,14 @@ export class UserComponent implements OnInit
         this.usersObservable = this.usersService.getObservable();
         // subscribe to observable for getting person changes
         this.usersObservable.subscribe(
-            (users) => 
             {
-                // get persons list from observable
-                this.users = users;
+                next: users => 
+                {
+                    // get persons list from observable
+                    this.users = users;
+                }
             }
-        )
+        );
     }
 
     //
