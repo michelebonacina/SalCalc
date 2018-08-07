@@ -23,10 +23,12 @@ export class AlertComponent implements OnInit, OnDestroy
     {
         // subcribe to alert service
         this.subscritpion = this.alertService.getMessage().subscribe(
-            (message) =>
             {
-                // keep message when arrive
-                this.message = message;
+                next: message =>
+                {
+                    // keep message when arrive
+                    this.message = message;
+                }
             }
         );
     }

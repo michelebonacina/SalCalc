@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../_model';
 import { Observable } from 'rxjs';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../environments';
 
@@ -12,17 +12,28 @@ import { environment } from '../../environments';
 // define services available for users management
 // - getObservable: return userss observable for change events subscribing
 // - getUsers: get users list and raise an update event
-
 @Injectable({ providedIn: 'root' })
 export class UsersService
 {
-    users: User[];                              // users list
     public userObservable: Observable<any>;     // async observable user
     observer: any;                              // async observer instance
+    private httpOptions: any;                       // authorization token  
 
     // create a new users service
-    constructor(private http: Http)
+    constructor(private httpClient: HttpClient)
     {
+        // get authenticated user
+        var currentUser: User = JSON.parse(localStorage.getItem('currentUser'));
+        // prepare the authorization token
+        this.httpOptions =
+            {
+                headers: new HttpHeaders(
+                    {
+                        'Authorization': 'Basic ' + btoa(currentUser.username + ':' + currentUser.password),
+                        'Content-Type': 'application/json'
+                    }
+                )
+            };
         // create the observable
         this.userObservable = new Observable(
             (observer) =>
@@ -47,7 +58,7 @@ export class UsersService
     // manage promise error
     handleErrorPromise(error: Response | any)
     {
-        console.error(error.message || error);
+        console.log(error.message || error);
         return Promise.reject(error.message || error);
     }
 
@@ -57,16 +68,20 @@ export class UsersService
     getUsers()
     {
         // call backend and gets response
-        this.http
-            .get(`${environment.apiUrl}/api/user/list`)
-            .toPromise()
-            .then(
-                (response) =>
+        this.httpClient
+            .get(`${environment.apiUrl}/api/user/list`, this.httpOptions)
+            .subscribe(
                 {
-                    // get users from backend response
-                    this.users = response.json();
-                    // send update event to subscribers
-                    this.observer.next(this.users);
+                    next: response =>
+                    {
+                        // get users from backend response
+                        // send update event to subscribers
+                        this.observer.next(response);
+                    },
+                    error: error =>
+                    {
+                        this.handleErrorPromise(error);
+                    }
                 }
             );
     }
@@ -77,22 +92,21 @@ export class UsersService
     addUser(user: User)
     {
         // post user to backend and get response
-        var headers = new Headers();
-        headers.append('content-type', 'application/json');
-        var requestOptions = new RequestOptions();
-        requestOptions.headers = headers;
-        requestOptions.withCredentials = true;
-        this.http
-            .post(`${environment.apiUrl}/api/user/create`, JSON.stringify(user), requestOptions)
-            .toPromise()
-            .then(
-                (response) =>
+        this.httpClient
+            .post(`${environment.apiUrl}/api/user/create`, JSON.stringify(user), this.httpOptions)
+            .subscribe(
                 {
-                    // gets users
-                    this.getUsers();
+                    next: response =>
+                    {
+                        // gets users
+                        this.getUsers();
+                    },
+                    error: error =>
+                    {
+                        this.handleErrorPromise(error);
+                    }
                 }
-            )
-            .catch(this.handleErrorPromise);
+            );
     }
 
     // modifie a user
@@ -101,23 +115,21 @@ export class UsersService
     modifyUser(user: User)
     {
         // post user to backend and get response
-        // post user to backend and get response
-        var headers = new Headers();
-        headers.append('content-type', 'application/json');
-        var requestOptions = new RequestOptions();
-        requestOptions.headers = headers;
-        requestOptions.withCredentials = true;
-        this.http
-            .post(`${environment.apiUrl}/api/user/update/` + user.id, JSON.stringify(user), requestOptions)
-            .toPromise()
-            .then(
-                (response) =>
+        this.httpClient
+            .post(`${environment.apiUrl}/api/user/update/` + user.id, JSON.stringify(user), this.httpOptions)
+            .subscribe(
                 {
-                    // gets users
-                    this.getUsers();
+                    next: response =>
+                    {
+                        // gets users
+                        this.getUsers();
+                    },
+                    error: error =>
+                    {
+                        this.handleErrorPromise(error);
+                    }
                 }
-            )
-            .catch(this.handleErrorPromise);;
+            );
     }
 
     // delete a user
@@ -126,14 +138,19 @@ export class UsersService
     deleteUser(user: User)
     {
         // delete user from backend and gets response
-        this.http
-            .delete(`${environment.apiUrl}/api/user/delete/` + user.id)
-            .toPromise()
-            .then(
-                (response) =>
+        this.httpClient
+            .delete(`${environment.apiUrl}/api/user/delete/` + user.id, this.httpOptions)
+            .subscribe(
                 {
-                    // get users
-                    this.getUsers();
+                    next: response =>
+                    {
+                        // get users
+                        this.getUsers();
+                    },
+                    error: error =>
+                    {
+                        this.handleErrorPromise(error);
+                    }
                 }
             );
     }

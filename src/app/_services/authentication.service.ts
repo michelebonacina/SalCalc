@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { User } from '../_model';
-import { Http } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'node_modules/rxjs';
 import { environment } from '../../environments';
+
+import { User } from '../_model';
 
 // manages user authentication
 // - login: check user credentials and login
@@ -11,35 +13,51 @@ export class AuthenticationService
 {
 
     // create a new user service
-    constructor(private http: Http) { }
+    constructor(private httpClient: HttpClient) { }
 
     // login user
     // call api for user authentication and on success store user in session
     login(user: User)
     {
         // call api login and get response
-        return this.http.post(
-            `${environment.apiUrl}/api/user/login`,
+        return new Observable(
+            (observer) =>
             {
-                username: user.username,
-                password: user.password,
-            })
-            .toPromise()
-            .then(
-                (response) =>
-                {
-                    // response ok
-                    // get user from response
-                    var responseUser = response.json();
-                    // create authenticated user
-                    var currentUser = new User();
-                    currentUser.username = responseUser.username;
-                    currentUser.password = responseUser.password;
-                    // store authenticated user in session
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser))
-                    // return authenticated user
-                    return currentUser;
-                })
+                this.httpClient.post(
+                    `${environment.apiUrl}/api/user/login`,
+                    {
+                        username: user.username,
+                        password: user.password,
+                    })
+                    .subscribe(
+                        {
+                            next: response =>
+                            {
+                                // response ok
+                                // create authenticated user
+                                var currentUser = new User();
+                                currentUser.id = response['id'];
+                                currentUser.username = response['username'];
+                                currentUser.password = response['password'];
+                                // store authenticated user in session
+                                localStorage.setItem('currentUser', JSON.stringify(currentUser))
+                                // raise events for subscribers
+                                observer.next(currentUser);
+                            },
+                            error: error =>
+                            {
+                                // raise error for subscriber
+                                observer.error(error);
+                            },
+                            complete: () =>
+                            {
+                                // raise complete for subscribers
+                                observer.complete();
+                            }
+                        }
+                    );
+            }
+        );
     }
 
     // logout user

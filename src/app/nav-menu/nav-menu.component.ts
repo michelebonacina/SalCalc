@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../_services';
 import { Router } from '@angular/router';
+import { environment } from '../../environments';
 
 // navigation bar component
 // manage side menu bar navigation
@@ -13,12 +14,16 @@ import { Router } from '@angular/router';
 export class NavMenuComponent implements OnInit
 {
 
+    companyName: string;        // name of the company
+
     constructor(
         private authenticationService: AuthenticationService,   // authentication service
         private router: Router                                  // navigation router
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.companyName = environment.companyName;
+     }
 
     // logout from application
     logout()

@@ -26,12 +26,14 @@ export class PersonDetailsComponent implements OnInit
         private element: ElementRef
     ) 
     {
-        this.personForm = formBuilder.group({
-            'id': [null],
-            'surname': [null, Validators.required],
-            'name': [null, Validators.required],
-            'birthdate': [null],
-        });
+        this.personForm = formBuilder.group(
+            {
+                'id': [null],
+                'surname': [null, Validators.required],
+                'name': [null, Validators.required],
+                'birthdate': [null],
+            }
+        );
     }
 
     // run on component startpu

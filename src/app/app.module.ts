@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { InMemoryWebApiModule } from 'angular-in-memory-web-api';        // uncomment for mock test service
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -32,7 +32,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     imports: [
         BrowserModule,
         ROUTING,        
-        HttpModule,
+        HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
         // InMemoryWebApiModule.forRoot(MockBackendService),        // uncomment for mock test service

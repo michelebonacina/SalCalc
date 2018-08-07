@@ -50,11 +50,13 @@ export class PersonComponent implements OnInit
         this.personsObservable = this.personsService.getObservable();
         // subscribe to observable for getting person changes
         this.personsObservable.subscribe(
-            (persons) => 
+            {
+            next: persons => 
             {
                 // get persons list from observable
                 this.persons = persons;
             }
+        }
         );
     }
 

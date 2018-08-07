@@ -73,15 +73,18 @@ export class LoginComponent implements OnInit
             user.username = this.loginForm.controls['username'].value;
             user.password = this.loginForm.controls['password'].value;
             // call service login and wait for response
-            this.authenticationService.login(user).then(
-                (user) =>
+            this.authenticationService.login(user).subscribe(
                 {
-                    this.router.navigate(['/']);
-                },
-                (error) =>
-                {
-                    // show error message
-                    this.alertService.error("User unknown!");
+                    next: user =>
+                    {
+                        // login succesful, go to root page
+                        this.router.navigate(['/']);
+                    },
+                    error: error =>
+                    {
+                        // show error message
+                        this.alertService.error("User unknown!");
+                    }
                 }
             );
         }

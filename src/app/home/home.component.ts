@@ -18,14 +18,16 @@ export class HomeComponent
     constructor(private activatedRoute: ActivatedRoute) { }
 
     // run on component startup
-    ngOnInit() {
+    ngOnInit()
+    {
         this.activatedRoute.queryParams.subscribe(
-            (params: Params) =>
             {
-                // get page from navigation selection
-                this.page = params['page'];
-                console.log(this.page);
+                next: params =>
+                {
+                    // get page from navigation selection
+                    this.page = params['page'];
+                }
             }
         );
-     }
+    }
 }
