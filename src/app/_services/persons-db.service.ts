@@ -24,7 +24,7 @@ export class PersonsService
     constructor(private httpClient: HttpClient) 
     {
         // get authenticated user
-        var currentUser: User = JSON.parse(localStorage.getItem('currentUser'));
+        var currentUser: User = JSON.parse(sessionStorage.getItem('currentUser'));
         // prepare the authorization token
         this.httpOptions =
             {

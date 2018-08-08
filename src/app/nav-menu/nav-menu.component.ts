@@ -24,7 +24,7 @@ export class NavMenuComponent implements OnInit
 
     ngOnInit() {
         this.companyName = environment.companyName;
-        this.username = JSON.parse(localStorage.getItem('currentUser')).username;
+        this.username = JSON.parse(sessionStorage.getItem('currentUser')).username;
      }
 
     // logout from application
