@@ -1,6 +1,6 @@
 {
   "name": "sal-calc",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Salary Calculator",
   "engines": {
     "node": "8.11.3",

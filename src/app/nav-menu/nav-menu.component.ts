@@ -16,6 +16,7 @@ export class NavMenuComponent implements OnInit
 
     companyName: string;        // name of the company
     username: string;           // user connected
+    version: string;            // application version
 
     constructor(
         private authenticationService: AuthenticationService,   // authentication service
@@ -24,6 +25,7 @@ export class NavMenuComponent implements OnInit
 
     ngOnInit() {
         this.companyName = environment.companyName;
+        this.version = environment.version;
         this.username = JSON.parse(sessionStorage.getItem('currentUser')).username;
      }
 

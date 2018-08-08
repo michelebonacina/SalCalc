@@ -5,15 +5,14 @@
         <h3 >
             <b>{{companyName}}</b>
         </h3>
-        <h4>
-            User: {{username}}
-        </h4>
+        <small>User: {{username}}</small><br>
+        <small>Ver: {{version}} </small>
     </div>
     <div class="w3-bar-block">
-        <a href="/index.html" class="w3-bar-item w3-button w3-hover-white">Home</a>
-        <a href="/index.html?page=person" class="w3-bar-item w3-button w3-hover-white">Person</a>
-        <a href="/index.html?page=user" class="w3-bar-item w3-button w3-hover-white">User</a>
+        <a href="/index.html" class="w3-bar-item w3-button w3-hover-white w3-bold">Home</a>
+        <a href="/index.html?page=person" class="w3-bar-item w3-button w3-hover-white w3-bold">Person</a>
+        <a href="/index.html?page=user" class="w3-bar-item w3-button w3-hover-white w3-bold">User</a>
         <br>
-        <a (click)="logout();" class="w3-bar-item w3-button w3-hover-white">Logout</a>
+        <a (click)="logout();" class="w3-bar-item w3-button w3-hover-white w3-bold">Logout</a>
     </div>
 </nav>
