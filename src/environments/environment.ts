@@ -4,8 +4,10 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:6002', // 'https://salcalcdb-led.eu-gb.mybluemix.net',
-    companyName: 'LED S.p.A.',
+    apiUrl: 'http://localhost:6002',        // 'https://salcalcdb-led.eu-gb.mybluemix.net',
+    companyName: 'LED S.p.A.',              // the name of the company
+    sessionTimeoutMillis: 5 * 60 * 1000,    // session timeout in milliseconds
+    version: '0.0.3',                       // application version
 };
 
 /*

@@ -39,8 +39,9 @@ export class AuthenticationService
                                 currentUser.id = response['id'];
                                 currentUser.username = response['username'];
                                 currentUser.password = response['password'];
+                                currentUser.lastActionTimestamp = new Date().getTime();
                                 // store authenticated user in session
-                                localStorage.setItem('currentUser', JSON.stringify(currentUser))
+                                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
                                 // raise events for subscribers
                                 observer.next(currentUser);
                             },
@@ -64,7 +65,7 @@ export class AuthenticationService
     logout()
     {
         // remove stored user from session
-        localStorage.removeItem('currentUser');
+        sessionStorage.removeItem('currentUser');
     }
 
 }

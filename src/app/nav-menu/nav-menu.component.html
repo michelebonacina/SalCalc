@@ -1,16 +1,18 @@
 <nav id="mySidebar" class="w3-sidebar w3-green w3-collapse w3-top w3-large w3-padding">
     <br>
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
-    <div class="w3-container">
-        <h3 class="w3-padding-64">
+    <div class="w3-container w3-padding-64">
+        <h3 >
             <b>{{companyName}}</b>
         </h3>
+        <small>User: {{username}}</small><br>
+        <small>Ver: {{version}} </small>
     </div>
     <div class="w3-bar-block">
-        <a href="/index.html" class="w3-bar-item w3-button w3-hover-white">Home</a>
-        <a href="/index.html?page=person" class="w3-bar-item w3-button w3-hover-white">Person</a>
-        <a href="/index.html?page=user" class="w3-bar-item w3-button w3-hover-white">User</a>
+        <a href="/index.html" class="w3-bar-item w3-button w3-hover-white w3-bold">Home</a>
+        <a href="/index.html?page=person" class="w3-bar-item w3-button w3-hover-white w3-bold">Person</a>
+        <a href="/index.html?page=user" class="w3-bar-item w3-button w3-hover-white w3-bold">User</a>
         <br>
-        <a (click)="logout();" class="w3-bar-item w3-button w3-hover-white">Logout</a>
+        <a (click)="logout();" class="w3-bar-item w3-button w3-hover-white w3-bold">Logout</a>
     </div>
 </nav>
