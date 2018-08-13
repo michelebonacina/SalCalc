@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Person } from '../_model';
-import { PersonsService } from '../_services';
+import { PersonsService, AlertService } from '../_services';
 
 // define component for person details management
 // - cancelPersonForm: cancel person form without saving and hide form
@@ -22,8 +22,10 @@ export class PersonDetailsComponent implements OnInit
     showModifyPersonForm: boolean = false;                      // specify person modify form visibility
 
     // create a new person detail component
-    constructor(formBuilder: FormBuilder,
-        private element: ElementRef
+    constructor(
+        formBuilder: FormBuilder,
+        private element: ElementRef,
+        private alertService: AlertService,
     ) 
     {
         this.personForm = formBuilder.group(
@@ -82,7 +84,20 @@ export class PersonDetailsComponent implements OnInit
             person.name = this.personForm.controls["name"].value;
             person.birthdate = this.personForm.controls["birthdate"].value;
             // add person to list            
-            this.personsService.modifyPerson(person);
+            this.personsService
+                .modifyPerson(person)
+                .subscribe(
+                    {
+                        error: (error) =>
+                        {
+                            this.alertService.error(error);
+                        },
+                        complete: () =>
+                        {
+                            this.alertService.success("Person Updated!");
+                        }
+                    }
+                );
             // hide modify form
             this.personForm.reset();
             this.showModifyPersonForm = false;

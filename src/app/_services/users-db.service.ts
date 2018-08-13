@@ -87,11 +87,11 @@ export class UsersService
     addUser(user: User): Observable<any>
     {
         // user observer for response managment
-        var addUserObserver: any;
+        var currentUserObserver: any;
         var observable = new Observable(
             (observer) =>
             {
-                addUserObserver = observer;
+                currentUserObserver = observer;
             }
         );
         // post user to backend and get response
@@ -103,11 +103,11 @@ export class UsersService
                     {
                         // gets users
                         this.getUsers();
-                        addUserObserver.complete();
+                        currentUserObserver.complete();
                     },
                     error: (error) =>
                     {
-                        addUserObserver.error(error.message || error);
+                        currentUserObserver.error(error.message || error);
                     }
                 }
             );
@@ -120,11 +120,11 @@ export class UsersService
     modifyUser(user: User)
     {
         // user observer for response managment
-        var addUserObserver: any;
+        var currentUserObserver: any;
         var observable = new Observable(
             (observer) =>
             {
-                addUserObserver = observer;
+                currentUserObserver = observer;
             }
         );
         // post user to backend and get response
@@ -136,11 +136,11 @@ export class UsersService
                     {
                         // gets users
                         this.getUsers();
-                        addUserObserver.complete();
+                        currentUserObserver.complete();
                     },
                     error: (error) =>
                     {
-                        addUserObserver.error(error.message || error);
+                        currentUserObserver.error(error.message || error);
                     }
                 }
             );
@@ -153,11 +153,11 @@ export class UsersService
     changeUserPassword(user: User)
     {
         // user observer for response managment
-        var addUserObserver: any;
+        var currentUserObserver: any;
         var observable = new Observable(
             (observer) =>
             {
-                addUserObserver = observer;
+                currentUserObserver = observer;
             }
         );
         // post user to backend and get response
@@ -169,11 +169,11 @@ export class UsersService
                     {
                         // gets users
                         this.getUsers();
-                        addUserObserver.complete();
+                        currentUserObserver.complete();
                     },
                     error: (error) =>
                     {
-                        addUserObserver.error(error.message || error);
+                        currentUserObserver.error(error.message || error);
                     }
                 }
             );
@@ -187,11 +187,11 @@ export class UsersService
     deleteUser(user: User)
     {
         // user observer for response managment
-        var addUserObserver: any;
+        var currentUserObserver: any;
         var observable = new Observable(
             (observer) =>
             {
-                addUserObserver = observer;
+                currentUserObserver = observer;
             }
         );
         // delete user from backend and gets response
@@ -203,11 +203,11 @@ export class UsersService
                     {
                         // get users
                         this.getUsers();
-                        addUserObserver.complete();
+                        currentUserObserver.complete();
                     },
                     error: (error) =>
                     {
-                        addUserObserver.error(error.message || error);
+                        currentUserObserver.error(error.message || error);
                     }
                 }
             );

@@ -30,7 +30,7 @@ export class PersonComponent implements OnInit
 
     // create a new person component
     constructor(
-        private formBuilder: FormBuilder, 
+        private formBuilder: FormBuilder,
         private personsService: PersonsService,
         private alertService: AlertService,
     )
@@ -55,16 +55,16 @@ export class PersonComponent implements OnInit
         // subscribe to observable for getting person changes
         this.personsObservable.subscribe(
             {
-            next: persons => 
-            {
-                // get persons list from observable
-                this.persons = persons;
-            },
-            error: error =>
-            {
-                this.alertService.error(error);
+                next: persons => 
+                {
+                    // get persons list from observable
+                    this.persons = persons;
+                },
+                error: error =>
+                {
+                    this.alertService.error(error);
+                }
             }
-        }
         );
     }
 
@@ -124,7 +124,21 @@ export class PersonComponent implements OnInit
             person.name = this.personForm.controls["name"].value;
             person.birthdate = this.personForm.controls["birthdate"].value;
             // add person to list            
-            this.personsService.addPerson(person);
+            this.personsService
+                .addPerson(person)
+                .subscribe(
+                    {
+                        error: (error) =>
+                        {
+                            this.alertService.error(error);
+                        },
+                        complete: () =>
+                        {
+                            this.alertService.success("Person Created!");
+                        }
+
+                    }
+                );
             // reset form
             this.personForm.reset();
             // show person form
@@ -144,7 +158,20 @@ export class PersonComponent implements OnInit
         if (confirm("Are you sure you want to delete " + person.surname + " " + person.name + "?"))
         {
             // delete person
-            this.personsService.deletePerson(person);
+            this.personsService
+                .deletePerson(person)
+                .subscribe(
+                    {
+                        error: (error) =>
+                        {
+                            this.alertService.error(error);
+                        },
+                        complete: () =>
+                        {
+                            this.alertService.success("Person Deleted!");
+                        }
+                    }
+                );
         }
     }
 }
