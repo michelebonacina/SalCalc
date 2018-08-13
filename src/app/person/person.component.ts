@@ -4,7 +4,7 @@ import { faTrash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 
 import { Person } from '../_model';
-import { PersonsService } from '../_services';
+import { PersonsService, AlertService } from '../_services';
 
 
 // define component for person management
@@ -29,7 +29,11 @@ export class PersonComponent implements OnInit
     personsObservable: Observable<any>;     // observable person for getting changes
 
     // create a new person component
-    constructor(private formBuilder: FormBuilder, private personsService: PersonsService)
+    constructor(
+        private formBuilder: FormBuilder, 
+        private personsService: PersonsService,
+        private alertService: AlertService,
+    )
     {
         // initialize persons list
         this.persons = [];
@@ -55,6 +59,10 @@ export class PersonComponent implements OnInit
             {
                 // get persons list from observable
                 this.persons = persons;
+            },
+            error: error =>
+            {
+                this.alertService.error(error);
             }
         }
         );

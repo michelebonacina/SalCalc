@@ -60,7 +60,7 @@ export class PersonsService
     handleErrorPromise(error: Response | any)
     {
         console.error(error.message || error);
-        return Promise.reject(error.message || error);
+        this.observer.error(error.message || error);
     }
 
     // get persons list
