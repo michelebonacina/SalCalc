@@ -1,19 +1,65 @@
 <div *ngIf="showModifyUserForm">
-    <form [formGroup]="userForm" (ngSubmit)="modifyUser($event, userForm)">
+    <form [formGroup]="userForm" (ngSubmit)="modifyUser($event)">
+        <input type="hidden" formControlName="id">
         <div class="w3-section-small">
-            <label>Username</label><span class="w3-text-red" *ngIf="userForm.controls['username'].validator && userForm.controls['username'].validator('').required">*</span>
+            <label>Username</label>
+            <span class="w3-text-red" *ngIf="userForm.controls['username'].validator && userForm.controls['username'].validator('').required">*</span>
             <input type="text" class="w3-input-inline w3-border" formControlName="username" [ngClass]="{'hasError':!userForm.controls['username'].valid, 'isCorrect':userForm.controls['username'].valid}"
                 autofocus>
         </div>
+        <div class="w3-section-small">
+            <label>Surname</label>
+            <span class="w3-text-red" *ngIf="userForm.controls['surname'].validator && userForm.controls['surname'].validator('').required">*</span>
+            <input type="text" class="w3-input-inline w3-border" formControlName="surname" [ngClass]="{'hasError':!userForm.controls['surname'].valid, 'isCorrect':userForm.controls['surname'].valid}"
+                autofocus>
+        </div>
+        <div class="w3-section-small">
+            <label>Name</label>
+            <span class="w3-text-red" *ngIf="userForm.controls['name'].validator && userForm.controls['name'].validator('').required">*</span>
+            <input type="text" class="w3-input-inline w3-border" formControlName="name" [ngClass]="{'hasError':!userForm.controls['name'].valid, 'isCorrect':userForm.controls['name'].valid}"
+                autofocus>
+        </div>
         <button class="w3-button w3-border w3-border-green" [disabled]="!userForm.valid || userForm.pristine">Save</button>
-        <button class="w3-button w3-border w3-border-green" (click)="cancelUserForm($event, userForm)">Cancel</button>
+        <button class="w3-button w3-border w3-border-green" (click)="cancelUserForm($event)">Cancel</button>
     </form>
 </div>
 
-<div *ngIf="!showModifyUserForm">
+<div *ngIf="showChangeUserPasswordForm">
+    <form [formGroup]="userPasswordForm" (ngSubmit)="changeUserPassword($event)">
+        <input type="hidden" formControlName="id">
+        <div class="w3-section-small">
+            <label>Username:</label>
+            <span class="w3-data-inline">{{user.username}}</span>
+        </div>
+        <div class="w3-section-small">
+            <label>Password</label>
+            <span class="w3-text-red" *ngIf="userPasswordForm.controls['password'].validator && userPasswordForm.controls['password'].validator('').required">*</span>
+            <input type="password" class="w3-input-inline w3-border" formControlName="password" [ngClass]="{'hasError':!userPasswordForm.controls['password'].valid, 'isCorrect':userPasswordForm.controls['password'].valid}"
+                autofocus>
+        </div>
+        <div class="w3-section-small">
+            <label>Password</label>
+            <span class="w3-text-red" *ngIf="userPasswordForm.controls['password2'].validator && userPasswordForm.controls['password2'].validator('').required">*</span>
+            <input type="password" class="w3-input-inline w3-border" formControlName="password2" [ngClass]="{'hasError':!userPasswordForm.controls['password2'].valid || userPasswordForm.errors?.passwordNotMatch, 'isCorrect':userPasswordForm.controls['password2'].valid && userPasswordForm.errors == null}">
+        </div>
+        <button class="w3-button w3-border w3-border-green" [disabled]="!userPasswordForm.valid || userPasswordForm.pristine">Save</button>
+        <button class="w3-button w3-border w3-border-green" (click)="cancelUserPasswordForm($event)">Cancel</button>
+    </form>
+</div>
+
+<div *ngIf="!showModifyUserForm && !showChangeUserPasswordForm">
     <div class="w3-section-small">
         <label>Username:</label>
         <span class="w3-data-inline">{{user.username}}</span>
     </div>
+    <div class="w3-section-small">
+        <label>Surname:</label>
+        <span class="w3-data-inline">{{user.surname}}</span>
+    </div>
+    <div class="w3-section-small">
+        <label>Name:</label>
+        <span class="w3-data-inline">{{user.name}}</span>
+    </div>
     <button class="w3-button w3-border w3-border-green" (click)="modifyUserForm($event)">Modify</button>
+    <button class="w3-button w3-border w3-border-green" (click)="changeUserPasswordForm($event)">Change Password</button>
 </div>

@@ -56,13 +56,6 @@ export class PersonsService
         return this.personObservable;
     }
 
-    // manage promise error
-    handleErrorPromise(error: Response | any)
-    {
-        console.error(error.message || error);
-        return Promise.reject(error.message || error);
-    }
-
     // get persons list
     // connect to backend and get persons list
     // after that, invokes observer for sending persons list to all subscribers
@@ -80,7 +73,8 @@ export class PersonsService
                     },
                     error: error =>
                     {
-                        this.handleErrorPromise(error);
+                        console.error(error.message || error);
+                        this.observer.error(error.message || error);
                     }
                 }
             );
@@ -89,8 +83,16 @@ export class PersonsService
     // add a person
     // connect to backend and add a person to persons list
     // after that, reload persons list
-    addPerson(person: Person)
+    addPerson(person: Person): Observable<any>
     {
+        // person observer for response managment
+        var currentPersonObserver: any;
+        var observable = new Observable(
+            (observer) =>
+            {
+                currentPersonObserver = observer;
+            }
+        );
         // post person to backend and get response
         this.httpClient
             .post(`${environment.apiUrl}/api/person/create`, JSON.stringify(person), this.httpOptions)
@@ -100,20 +102,30 @@ export class PersonsService
                     {
                         // get persons
                         this.getPersons();
+                        currentPersonObserver.complete();
                     },
                     error: error =>
                     {
-                        this.handleErrorPromise(error);
+                        currentPersonObserver.error(error.message || error);
                     }
                 }
             );
+        return observable;
     }
 
     // modifie a person
     // connect to backend and modifie person's data
     // after that, reload persons list
-    modifyPerson(person: Person)
+    modifyPerson(person: Person): Observable<any>
     {
+        // person observer for response managment
+        var currentPersonObserver: any;
+        var observable = new Observable(
+            (observer) =>
+            {
+                currentPersonObserver = observer;
+            }
+        );
         // post person to backend and get response
         this.httpClient
             .post(`${environment.apiUrl}/api/person/update/` + person.id, JSON.stringify(person), this.httpOptions)
@@ -123,20 +135,30 @@ export class PersonsService
                     {
                         // gets persons
                         this.getPersons();
+                        currentPersonObserver.complete();
                     },
                     error: error =>
                     {
-                        this.handleErrorPromise(error);
+                        currentPersonObserver.error(error.message || error);
                     }
                 }
             );
+        return observable;
     }
 
     // delete a person
     // connect to backend and delete a person from persons list
     // after that, reload persons list
-    deletePerson(person: Person)
+    deletePerson(person: Person): Observable<any>
     {
+        // person observer for response managment
+        var currentPersonObserver: any;
+        var observable = new Observable(
+            (observer) =>
+            {
+                currentPersonObserver = observer;
+            }
+        );
         // delete person from backend and get response
         this.httpClient
             .delete(`${environment.apiUrl}/api/person/delete/` + person.id, this.httpOptions)
@@ -146,13 +168,15 @@ export class PersonsService
                     {
                         // get persons
                         this.getPersons();
+                        currentPersonObserver.complete();
                     },
                     error: error =>
                     {
-                        this.handleErrorPromise(error);
+                        currentPersonObserver.error(error.message || error);
                     }
                 }
             );
+        return observable;
     }
 
 }

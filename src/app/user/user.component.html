@@ -18,6 +18,14 @@
                 <label>Password</label><span class="w3-text-red" *ngIf="userForm.controls['password'].validator && userForm.controls['password'].validator('').required">*</span>
                 <input type="password" class="w3-input-inline w3-border" formControlName="password" [ngClass]="{'hasError':!userForm.controls['password'].valid, 'isCorrect':userForm.controls['password'].valid}">
             </div>
+            <div class="w3-section-small">
+                <label>Surname</label><span class="w3-text-red" *ngIf="userForm.controls['surname'].validator && userForm.controls['surname'].validator('').required">*</span>
+                <input type="text" class="w3-input-inline w3-border" formControlName="surname" [ngClass]="{'hasError':!userForm.controls['surname'].valid, 'isCorrect':userForm.controls['surname'].valid}" autofocus>
+            </div>
+            <div class="w3-section-small">
+                <label>Name</label><span class="w3-text-red" *ngIf="userForm.controls['name'].validator && userForm.controls['name'].validator('').required">*</span>
+                <input type="text" class="w3-input-inline w3-border" formControlName="name" [ngClass]="{'hasError':!userForm.controls['name'].valid, 'isCorrect':userForm.controls['name'].valid}" autofocus>
+            </div>
             <button class="w3-button w3-border w3-border-green" [disabled]="!userForm.valid">Add</button>
             <button class="w3-button w3-border w3-border-green" (click)="resetUserForm($event, userForm)">Reset</button>
             <button class="w3-button w3-border w3-border-green" (click)="cancelUserForm($event, userForm)">Cancel</button>
@@ -33,6 +41,8 @@
             <tr class="w3-green">
                 <th></th>
                 <th>Username</th>
+                <th>Surname</th>
+                <th>Name</th>
             </tr>
             <tr id="row_{{i}}" *ngFor="let user of users; let i = index">
                 <td class="w3-cell-middle buttons-area">
@@ -44,6 +54,8 @@
                     </button>
                 </td>
                 <td *ngIf="!user.showDetails" class="w3-cell-middle">{{user.username}}</td>
+                <td *ngIf="!user.showDetails" class="w3-cell-middle">{{user.surname}}</td>
+                <td *ngIf="!user.showDetails" class="w3-cell-middle">{{user.name}}</td>
                 <td *ngIf="user.showDetails" class="w3-cell-middle" colspan="3">
                     <app-user-details [user]="user" [usersService]="usersService"></app-user-details>
                 </td>

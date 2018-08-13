@@ -4,7 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { faTrash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 
-import { UsersService } from '../_services/users-db.service';
+import { UsersService } from '../_services';
+import { AlertService } from '../_services';
 
 // define component for user management
 // - resetUserForm: remove user data from form field
@@ -28,9 +29,12 @@ export class UserComponent implements OnInit
     showNewUserForm: boolean = false;       // identify user form visibility
     usersObservable: Observable<any>;       // observable person for getting changes
 
-
     // create a new user component
-    constructor(private formBuilder: FormBuilder, public usersService: UsersService)
+    constructor(
+        private formBuilder: FormBuilder,
+        public usersService: UsersService,
+        private alertService: AlertService,
+    )
     {
         this.users = [];
     }
@@ -43,6 +47,8 @@ export class UserComponent implements OnInit
             {
                 'username': [null, Validators.required],
                 'password': [null, Validators.required],
+                'name': [null, Validators.required],
+                'surname': [null, Validators.required],
             }
         );
         // get observable user from user service
@@ -50,10 +56,14 @@ export class UserComponent implements OnInit
         // subscribe to observable for getting person changes
         this.usersObservable.subscribe(
             {
-                next: users => 
+                next: (users) => 
                 {
                     // get persons list from observable
                     this.users = users;
+                },
+                error: (error) =>
+                {
+                    this.alertService.error(error);
                 }
             }
         );
@@ -113,8 +123,23 @@ export class UserComponent implements OnInit
             let user: User = new User();
             user.username = this.userForm.controls["username"].value;
             user.password = this.userForm.controls["password"].value;
+            user.surname = this.userForm.controls["surname"].value;
+            user.name = this.userForm.controls["name"].value;
             // add user to list            
-            this.usersService.addUser(user);
+            this.usersService
+                .addUser(user)
+                .subscribe(
+                    {
+                        error: error =>
+                        {
+                            this.alertService.error(error);
+                        },
+                        complete: () =>
+                        {
+                            this.alertService.success("User created!");
+                        }
+                    }
+                );
             // reset form
             this.userForm.reset();
             // show user form
@@ -132,7 +157,21 @@ export class UserComponent implements OnInit
         this.showNewUserForm = false;
         if (confirm("Are you sure you want to delete " + user.username + "?"))
         {
-            this.usersService.deleteUser(user);
+            // delete user
+            this.usersService
+                .deleteUser(user)
+                .subscribe(
+                    {
+                        error: (error) =>
+                        {
+                            this.alertService.error(error);
+                        },
+                        complete: () =>
+                        {
+                            this.alertService.success("User Deleted!");
+                        }
+                    }
+                );
         }
     }
 

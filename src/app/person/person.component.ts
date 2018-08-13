@@ -4,7 +4,7 @@ import { faTrash, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 
 import { Person } from '../_model';
-import { PersonsService } from '../_services';
+import { PersonsService, AlertService } from '../_services';
 
 
 // define component for person management
@@ -29,7 +29,11 @@ export class PersonComponent implements OnInit
     personsObservable: Observable<any>;     // observable person for getting changes
 
     // create a new person component
-    constructor(private formBuilder: FormBuilder, private personsService: PersonsService)
+    constructor(
+        private formBuilder: FormBuilder,
+        private personsService: PersonsService,
+        private alertService: AlertService,
+    )
     {
         // initialize persons list
         this.persons = [];
@@ -51,12 +55,16 @@ export class PersonComponent implements OnInit
         // subscribe to observable for getting person changes
         this.personsObservable.subscribe(
             {
-            next: persons => 
-            {
-                // get persons list from observable
-                this.persons = persons;
+                next: persons => 
+                {
+                    // get persons list from observable
+                    this.persons = persons;
+                },
+                error: error =>
+                {
+                    this.alertService.error(error);
+                }
             }
-        }
         );
     }
 
@@ -116,7 +124,21 @@ export class PersonComponent implements OnInit
             person.name = this.personForm.controls["name"].value;
             person.birthdate = this.personForm.controls["birthdate"].value;
             // add person to list            
-            this.personsService.addPerson(person);
+            this.personsService
+                .addPerson(person)
+                .subscribe(
+                    {
+                        error: (error) =>
+                        {
+                            this.alertService.error(error);
+                        },
+                        complete: () =>
+                        {
+                            this.alertService.success("Person Created!");
+                        }
+
+                    }
+                );
             // reset form
             this.personForm.reset();
             // show person form
@@ -136,7 +158,20 @@ export class PersonComponent implements OnInit
         if (confirm("Are you sure you want to delete " + person.surname + " " + person.name + "?"))
         {
             // delete person
-            this.personsService.deletePerson(person);
+            this.personsService
+                .deletePerson(person)
+                .subscribe(
+                    {
+                        error: (error) =>
+                        {
+                            this.alertService.error(error);
+                        },
+                        complete: () =>
+                        {
+                            this.alertService.success("Person Deleted!");
+                        }
+                    }
+                );
         }
     }
 }

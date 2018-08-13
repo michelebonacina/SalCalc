@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../environments';
+import { throws } from 'assert';
 
 //
 // !!NOTE!! Use this service for db persistence. You can use only one user-xx.service at time.
@@ -55,13 +56,6 @@ export class UsersService
         return this.userObservable;
     }
 
-    // manage promise error
-    handleErrorPromise(error: Response | any)
-    {
-        console.log(error.message || error);
-        return Promise.reject(error.message || error);
-    }
-
     // get users list
     // connect to backend and get users list
     // after that, invoke observer for sending users list to all subscribers
@@ -72,15 +66,16 @@ export class UsersService
             .get(`${environment.apiUrl}/api/user/list`, this.httpOptions)
             .subscribe(
                 {
-                    next: response =>
+                    next: (response) =>
                     {
                         // get users from backend response
                         // send update event to subscribers
                         this.observer.next(response);
                     },
-                    error: error =>
+                    error: (error) =>
                     {
-                        this.handleErrorPromise(error);
+                        console.log(error.message || error);
+                        this.observer.error(error.message || error);
                     }
                 }
             );
@@ -89,24 +84,34 @@ export class UsersService
     // add a user
     // connect to backend and add a user to users list
     // after that, reload users list
-    addUser(user: User)
+    addUser(user: User): Observable<any>
     {
+        // user observer for response managment
+        var currentUserObserver: any;
+        var observable = new Observable(
+            (observer) =>
+            {
+                currentUserObserver = observer;
+            }
+        );
         // post user to backend and get response
         this.httpClient
             .post(`${environment.apiUrl}/api/user/create`, JSON.stringify(user), this.httpOptions)
             .subscribe(
                 {
-                    next: response =>
+                    next: (response) =>
                     {
                         // gets users
                         this.getUsers();
+                        currentUserObserver.complete();
                     },
-                    error: error =>
+                    error: (error) =>
                     {
-                        this.handleErrorPromise(error);
+                        currentUserObserver.error(error.message || error);
                     }
                 }
             );
+        return observable;
     }
 
     // modifie a user
@@ -114,44 +119,98 @@ export class UsersService
     // after that, reload users list
     modifyUser(user: User)
     {
+        // user observer for response managment
+        var currentUserObserver: any;
+        var observable = new Observable(
+            (observer) =>
+            {
+                currentUserObserver = observer;
+            }
+        );
         // post user to backend and get response
         this.httpClient
             .post(`${environment.apiUrl}/api/user/update/` + user.id, JSON.stringify(user), this.httpOptions)
             .subscribe(
                 {
-                    next: response =>
+                    next: (response) =>
                     {
                         // gets users
                         this.getUsers();
+                        currentUserObserver.complete();
                     },
-                    error: error =>
+                    error: (error) =>
                     {
-                        this.handleErrorPromise(error);
+                        currentUserObserver.error(error.message || error);
                     }
                 }
             );
+        return observable;
     }
+
+    // change a user password
+    // connect to backend and change password
+    // after that, reload users list
+    changeUserPassword(user: User)
+    {
+        // user observer for response managment
+        var currentUserObserver: any;
+        var observable = new Observable(
+            (observer) =>
+            {
+                currentUserObserver = observer;
+            }
+        );
+        // post user to backend and get response
+        this.httpClient
+            .post(`${environment.apiUrl}/api/user/changePassword/` + user.id, JSON.stringify(user), this.httpOptions)
+            .subscribe(
+                {
+                    next: (response) =>
+                    {
+                        // gets users
+                        this.getUsers();
+                        currentUserObserver.complete();
+                    },
+                    error: (error) =>
+                    {
+                        currentUserObserver.error(error.message || error);
+                    }
+                }
+            );
+        return observable;
+    }
+
 
     // delete a user
     // connect to backend and delete a user from users list
     // after thar, reloads users list
     deleteUser(user: User)
     {
+        // user observer for response managment
+        var currentUserObserver: any;
+        var observable = new Observable(
+            (observer) =>
+            {
+                currentUserObserver = observer;
+            }
+        );
         // delete user from backend and gets response
         this.httpClient
             .delete(`${environment.apiUrl}/api/user/delete/` + user.id, this.httpOptions)
             .subscribe(
                 {
-                    next: response =>
+                    next: (response) =>
                     {
                         // get users
                         this.getUsers();
+                        currentUserObserver.complete();
                     },
-                    error: error =>
+                    error: (error) =>
                     {
-                        this.handleErrorPromise(error);
+                        currentUserObserver.error(error.message || error);
                     }
                 }
             );
+        return observable;
     }
 }
