@@ -11,7 +11,6 @@
                 <tr>
                     <th>
                         <label>Username</label>
-                        <span class="w3-text-red" *ngIf="loginForm.controls['username'].validator && loginForm.controls['username'].validator('').required">*</span>
                     </th>
                     <td>
                         <input type="text" formControlName="username" class="w3-input-inline w3-border" [ngClass]="{'hasError':!loginForm.controls['username'].valid, 'isCorrect':loginForm.controls['username'].valid}"
@@ -21,9 +20,9 @@
                 <tr>
                     <th>
                         <label>Password</label>
-                        <span class="w3-text-red" *ngIf="loginForm.controls['password'].validator && loginForm.controls['password'].validator('').required">*</span>
                         <td>
-                            <input type="password" formControlName="password" class="w3-input-inline w3-border" [ngClass]="{'hasError':!loginForm.controls['password'].valid, 'isCorrect':loginForm.controls['password'].valid}"> </td>
+                            <input type="password" formControlName="password" class="w3-input-inline w3-border" [ngClass]="{'hasError':!loginForm.controls['password'].valid, 'isCorrect':loginForm.controls['password'].valid}">
+                        </td>
                 </tr>
                 <tr class="w3-green">
                     <th colspan="2"></th>
@@ -31,7 +30,7 @@
                 <tr>
                     <td class="w3-center" colspan="2">
                         <button class="w3-button w3-border w3-border-green" [disabled]="!loginForm.valid">Login</button>
-                        <button class="w3-button w3-border w3-border-green" (click)="resetLoginForm($event, loginForm)">Reset</button>
+                        <button class="w3-button w3-border w3-border-green" (click)="resetLoginForm($event)">Reset</button>
                     </td>
                 </tr>
             </table>
